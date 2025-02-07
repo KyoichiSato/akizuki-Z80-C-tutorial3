@@ -30,7 +30,7 @@ _INIT_DATA      sect    comm
 ;-------------------------------+
 D_DATA          sect    comm
         global  _errno
-_errno  dw      0               ;for math lib  エラー番号設定領域
+_errno  dw      1               ;for math lib  エラー番号設定領域
                                 ; C言語の算術ライブラリで使用する
 
 ;=======================================+
@@ -80,22 +80,5 @@ L210$:
 	extnal	_CALL_MAIN
 	call	_CALL_MAIN	; コマンドライン引数をセットして main 関数を呼び出す
 
-        ; 動作確認で文字を出力してみる
-;	ld	C,09H	; CP/M 文字列出力
-;	ld	DE,STR1$        ; 最後に '$' を付けるとローカルラベル
-;	call	0005H	; BDOS CALL
-
-
-;       extnal  _main
-;        call    _main	; main関数実行
-
-;	ld	C,09H	; CP/M 文字列出力
-;	ld	DE,STR2$
-;	call	0005H	; BDOS CALL
-
 	jp	0	; CP/M ウォームスタート
-;STR1$:	db	'call main',0DH,0AH,'$' ; 0DH:CR 0AH:LF
-;STR2$:	db	0DH,0AH,'end main$'
-;300$:
-;        jr      300$
         end     _start
