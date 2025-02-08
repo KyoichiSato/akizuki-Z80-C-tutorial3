@@ -1,0 +1,6273 @@
+%%TOOL	  'xcc-v V10.07	 5a12' ,250208152707
+%%COMPILE language=C , source=cpmstdio,cps=2,dps=2
+;	Cross C	Compiler  XCC-V	 V10.07	(5a12) -08010000:0000-
+;		== Z80 (V07.02)	5430 ==		
+		extnal	__GETSPREG
+		extnal	__GETENDADDR
+		extnal	_CPMRESET
+		extnal	_CPMGETC
+		extnal	_CPMPUTC
+		extnal	_CPMOPEN
+		extnal	_CPMCLOSE
+		extnal	_CPMCREATE
+		extnal	_CPMSETDTA
+		extnal	_CPMRNDREAD
+		extnal	_CPMRNDWRITE
+		extnal	_CPMFILESIZE
+		extnal	_CPMRNDWRITEZ
+		extnal	_puts
+		extnal	_memset
+		extnal	_strcmp
+		extnal	__ctype
+		extnal	_malloc
+		extnal	__flushbuf
+		global	_close
+		global	_create
+		global	_open
+		global	_read
+		global	_write
+		global	_lseek
+		global	_hexchar
+		global	_puthex
+		global	_puthexshort
+		global	_print
+		global	_memdump
+		global	_put_iob
+		global	_init_iob
+		global	_DTAvalid
+		global	_rndrecordinc
+		global	_rndrecorddec
+		global	_extractfilename
+		global	_fdempty
+		global	_fdallocate
+		global	_fdget
+		global	_conout
+		global	_INIT_CPMSTDIO
+		global	_abort
+		global	__exit
+		global	_sbrk
+		global	_createopen
+		global	__iob
+B_cpmstdio		sect	comm
+_HEAPMEMORY:
+		ds	6
+__FILEBUFF:
+		ds	40
+__iob:
+		ds	180
+I_cpmstdio		sect	comm
+S1:
+		db	020h,020h,020h,0
+S2:
+		db	00dh,00ah,0
+S3:
+		db	020h,063h,06eh,074h,020h
+		db	020h,070h,074h,072h,020h
+		db	062h,061h,073h,065h,020h
+		db	066h,06ch,061h,067h,020h
+		db	066h,069h,06ch,065h,00dh
+		db	00ah,0
+S4:
+		db	020h,020h,020h,0
+S5:
+		db	00dh,00ah,0
+S6:
+		db	049h,04eh,049h,054h,05fh
+		db	043h,050h,04dh,053h,054h
+		db	044h,049h,04fh,00dh,00ah
+		db	0
+S7:
+		db	053h,050h,03ah,0
+S8:
+		db	048h,045h,041h,050h,020h
+		db	0
+S9:
+		db	020h,02dh,020h,0
+S10:
+		db	020h,053h,049h,05ah,045h
+		db	020h,0
+S11:
+		db	00dh,00ah,0
+S12:
+		db	05fh,069h,06fh,062h,020h
+		db	069h,06eh,069h,074h,020h
+		db	053h,050h,03ah,0
+S13:
+		db	00dh,00ah,0
+S14:
+		db	05fh,046h,049h,04ch,045h
+		db	042h,055h,046h,046h,020h
+		db	053h,049h,05ah,045h,020h
+		db	0
+S15:
+		db	00dh,00ah,0
+S16:
+		db	069h,06eh,069h,074h,020h
+		db	065h,06eh,064h,020h,053h
+		db	050h,03ah,0
+S17:
+		db	00dh,00ah,0
+S18:
+		db	061h,062h,06fh,072h,074h
+		db	020h,0
+S19:
+		db	05fh,065h,078h,069h,074h
+		db	020h,0
+S20:
+		db	073h,062h,072h,06bh,03ah
+		db	020h,073h,069h,07ah,065h
+		db	020h,0
+S21:
+		db	061h,064h,064h,072h,065h
+		db	073h,073h,020h,0
+S22:
+		db	020h,070h,06fh,069h,06eh
+		db	074h,020h,0
+S23:
+		db	00dh,00ah,0
+S24:
+		db	073h,062h,072h,06bh,03ah
+		db	020h,06dh,065h,06dh,06fh
+		db	072h,079h,020h,066h,075h
+		db	06ch,06ch,00dh,00ah,0
+S25:
+		db	063h,06ch,06fh,073h,065h
+		db	020h,066h,064h,03ah,0
+S26:
+		db	020h,0
+S27:
+		db	063h,06ch,06fh,073h,065h
+		db	020h,04eh,047h,020h,069h
+		db	06eh,076h,066h,064h,00dh
+		db	00ah,0
+S28:
+		db	043h,050h,04dh,043h,04ch
+		db	04fh,053h,045h,020h,04fh
+		db	04bh,00dh,00ah,0
+S29:
+		db	043h,050h,04dh,043h,04ch
+		db	04fh,053h,045h,020h,04eh
+		db	047h,00dh,00ah,0
+S30:
+		db	043h,04fh,04eh,0
+S31:
+		db	043h,04fh,04eh,0
+S32:
+		db	043h,04fh,04eh,0
+S33:
+		db	066h,064h,03ah,0
+S34:
+		db	00dh,00ah,0
+S35:
+		db	049h,04eh,056h,020h,04eh
+		db	041h,04dh,045h,0
+S36:
+		db	043h,050h,04dh,043h,052h
+		db	045h,041h,054h,045h,020h
+		db	04eh,047h,0
+S37:
+		db	043h,050h,04dh,043h,052h
+		db	045h,041h,054h,045h,020h
+		db	04fh,04bh,0
+S38:
+		db	043h,050h,04dh,04fh,050h
+		db	045h,04eh,020h,04eh,047h
+		db	0
+S39:
+		db	043h,050h,04dh,04fh,050h
+		db	045h,04eh,020h,04fh,04bh
+		db	0
+S40:
+		db	05fh,069h,06fh,062h,05bh
+		db	0
+S41:
+		db	05dh,020h,0
+S42:
+		db	00dh,00ah,0
+S43:
+		db	063h,072h,065h,061h,074h
+		db	065h,028h,0
+S44:
+		db	02ch,020h,030h,078h,0
+S45:
+		db	029h,00dh,00ah,0
+S46:
+		db	06fh,070h,065h,06eh,028h
+		db	0
+S47:
+		db	02ch,020h,030h,078h,0
+S48:
+		db	029h,00dh,00ah,0
+%%BFILE	  'C:\Users\uts\OneDrive\Documents\program\Z80\XCC-V‚ÌŽg‚¢•û3\cpmstdio.c' ,250129041543,1107
+C_cpmstdio		sect	code
+%%BFILE	  'C:\Users\uts\OneDrive\Documents\program\Z80\XCC-V‚ÌŽg‚¢•û3\cpm.h' ,250121032020,243
+%%TYP	  'void'	      ,	  0, 0,	0,   11111111b,	0
+%%TYP	  'char'	      ,	  1, 2,	1,   00111111b,	2
+%%TYP	  'unsigned char'     ,	  2, 2,	1,   01111111b,	2
+%%TYP	  'short'	      ,	  3, 3,	2,   00111111b,	2
+%%TYP	  'unsigned short'    ,	  4, 3,	2,   01111111b,	2
+%%TYP	  'int'		      ,	  5, 3,	2,   00111111b,	2
+%%TYP	  'unsigned int'      ,	  6, 3,	2,   01111111b,	2
+%%TYP	  'long'	      ,	  7, 3,	4,   00111111b,	4
+%%TYP	  'unsigned long'     ,	  8, 3,	4,   01111111b,	4
+%%TYP	  'float'	      ,	  9, 4,	4,   00000000b,	4
+%%TYP	  'double'	      ,	 10, 4,	8,   00000001b,	8
+%%TYP	  'enum'	      ,	 11, 8,	2,   00111111b,	2
+%%TYP	  'struct'	      ,	 12, 9,	0,   11111111b,	0
+%%TYP	  'union'	      ,	 13,10,	0,   11111111b,	0
+%%EFILE	  
+%%BFILE	  'C:\akiz80\INCLUDE\stdio.h' ,050803172024,113
+%%EFILE	  
+%%BFILE	  'C:\akiz80\INCLUDE\string.h' ,050803172034,44
+%%BFILE	  'C:\akiz80\INCLUDE\memory.h' ,050803171952,23
+%%EFILE	  
+%%EFILE	  
+%%BFILE	  'C:\akiz80\INCLUDE\ctype.h' ,050803171856,54
+%%EFILE	  
+%%SYM	  _iobuf,9,type=12,id=1,size=9
+%%DDS	  
+%%SYM	  _cnt,7,type=5,val=0,size=2
+%%SYM	  _ptr,7,type=1,val=2,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  _base,7,type=1,val=4,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  _flag,7,type=3,val=6,size=2
+%%SYM	  _file,7,type=1,val=8,size=1
+%%ENDD	  
+%%SYM	  _iob,0,sym=1,cls=2,val=__iob,size=180
+%%DTY	  
+%%DAR	  9,20
+%%ENDD	  
+%%SYM	  stheap,9,type=12,id=2,size=6
+%%DDS	  
+%%SYM	  start,7,type=0,val=0,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  end,7,type=0,val=2,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  point,7,type=0,val=4,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%ENDD	  
+%%SYM	  HEAPMEMORY,0,sym=2,cls=5,val=_HEAPMEMORY,size=6
+%%SYM	  stcpmfcb,9,type=12,id=3,size=37
+%%DDS	  
+%%SYM	  drive,7,type=2,val=0,size=1
+%%SYM	  filename,7,type=1,val=1,size=11
+%%DTY	  
+%%DAR	  1,11
+%%ENDD	  
+%%SYM	  currentblock,7,type=2,val=12,size=1
+%%SYM	  dummy1,7,type=2,val=13,size=1
+%%SYM	  dummy2,7,type=2,val=14,size=1
+%%SYM	  recordsize,7,type=2,val=15,size=1
+%%SYM	  filesize,7,type=8,val=16,size=4
+%%SYM	  date,7,type=4,val=20,size=2
+%%SYM	  time,7,type=4,val=22,size=2
+%%SYM	  deviceid,7,type=2,val=24,size=1
+%%SYM	  dirlocation,7,type=2,val=25,size=1
+%%SYM	  firstcluster,7,type=4,val=26,size=2
+%%SYM	  lastcluster,7,type=4,val=28,size=2
+%%SYM	  relativepos,7,type=4,val=30,size=2
+%%SYM	  currentrecord,7,type=2,val=32,size=1
+%%SYM	  rndrecordL,7,type=4,val=33,size=2
+%%SYM	  rndrecordH,7,type=2,val=35,size=1
+%%SYM	  rndrecordHH,7,type=2,val=36,size=1
+%%ENDD	  
+%%SYM	  stfilebuff,9,type=12,id=4,size=168
+%%DDS	  
+%%SYM	  FCB,7,sym=3,val=0,size=37
+%%SYM	  DTA_ptr,7,type=2,val=37,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  DTA_written,7,type=2,val=39,size=1
+%%SYM	  DTA,7,type=2,val=40,size=128
+%%DTY	  
+%%DAR	  1,128
+%%ENDD	  
+%%ENDD	  
+%%SYM	  _FILEBUFF,0,sym=4,cls=5,val=__FILEBUFF,size=40
+%%DTY	  
+%%DPT	  
+%%DAR	  2,20
+%%ENDD	  
+%%LINE	  000140
+%%FUNC	  hexchar,3,cls=2,type=1
+_hexchar:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+%%DFP	  1
+%%SYM	  a,14,type=2,cls=6,val=4,size=1
+%%ENDD	  
+%%BF	  
+%%LINE	  000141
+;Expr(141): a&=000f	
+		ld	A,(IX+4)
+		and	15
+		ld	(IX+4),A
+; - if -
+%%LINE	  000142
+;Expr(142): 10>a	
+		cp	10
+		jr.x	nc,L2
+;
+; - then -
+%%BB	  line=143
+; - return -
+%%LINE	  000144
+;Expr(144): a+ '0'	
+		ld	A,(IX+4)
+		add	A,48
+		ld	C,A
+		jr.x	L3
+%%EB	  
+; - endif -
+;
+L2:
+; - return -
+%%LINE	  000146
+;Expr(146): a- 10+ 'A'	
+		ld	A,(IX+4)
+		add	A,55
+		ld	C,A
+		jr.x	L3
+%%LINE	  000147
+; RET
+L3:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	a -> offset 4	 unsigned char
+%%LINE	  000151
+%%FUNC	  puthex,3,cls=2,type=0
+_puthex:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+%%DFP	  1
+%%SYM	  a,14,type=2,cls=6,val=4,size=1
+%%ENDD	  
+%%BF	  
+;	a -> 4	(00004h)	 unsigned char
+%%SYM	  code,0,type=1,cls=6,val=-1,size=1
+;	code ->	-1	(0ffffh)	 char
+%%LINE	  000153
+;Expr(153): code=hexchar(a>>4)	
+		ld	A,(IX+4)
+		srl	A
+		srl	A
+		srl	A
+		srl	A
+		ld	C,A
+		push	BC
+		call	_hexchar
+		ld	(IX-1),C
+%%LINE	  000154
+;Expr(154): CPMPUTC(code)	
+		pop	BC
+		ld	C,(IX-1)
+		push	BC
+		call	_CPMPUTC
+%%LINE	  000155
+;Expr(155): code=hexchar(a)	
+		pop	BC
+		ld	C,(IX+4)
+		push	BC
+		call	_hexchar
+		ld	(IX-1),C
+%%LINE	  000156
+;Expr(156): CPMPUTC(code)	
+		pop	BC
+		ld	C,(IX-1)
+		push	BC
+		call	_CPMPUTC
+%%LINE	  000157
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	a -> offset 4	 unsigned char
+;	code ->	offset -1	 char
+%%LINE	  000161
+%%FUNC	  puthexshort,3,cls=2,type=0
+_puthexshort:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+%%DFP	  1
+%%SYM	  a,14,type=4,cls=6,val=4,size=2
+%%ENDD	  
+%%BF	  
+%%LINE	  000162
+;Expr(162): puthex(a>>8)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		ld	A,8
+		or	A
+		jr	z,L0000000280
+L0000000279:
+		srl	B
+		rr	C
+		dec	A
+		jr	nz,L0000000279
+L0000000280:
+		push	BC
+		call	_puthex
+%%LINE	  000163
+;Expr(163): puthex(a)	
+		pop	BC
+		ld	C,(IX+4)
+		push	BC
+		call	_puthex
+%%LINE	  000164
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	a -> offset 4	 unsigned short
+%%LINE	  000168
+%%FUNC	  print,3,cls=2,type=0
+_print:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+%%DFP	  1
+%%SYM	  str,14,type=1,cls=6,val=4,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%ENDD	  
+%%BF	  
+;	str -> 4	(00004h)	 pointer
+%%SYM	  size,0,type=2,cls=6,val=-1,size=1
+;	size ->	-1	(0ffffh)	 unsigned char
+%%LINE	  000170
+;Expr(170): size=00ff	
+		ld	(IX-1),255
+; - while -
+L7:
+%%LINE	  000171
+;Expr(171): size	
+		ld	A,(IX-1)
+		or	A
+		jr.x	z,L9
+;
+%%BB	  line=172
+; - if -
+%%LINE	  000173
+;Expr(173): 0==*str	
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		ld	B,(HL)
+		ld	A,B
+		or	A
+		jr.x	nz,L11
+;
+; - then -
+; - return -
+%%LINE	  000174
+		jr.x	L12
+; - endif -
+;Expr(174):	
+L11:
+%%LINE	  000175
+;Expr(175): CPMPUTC(*str++ )	
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		ld	B,(HL)
+		ld	C,B
+		push	BC
+		inc	HL
+		ld	(IX+4),L
+		ld	(IX+5),H
+		call	_CPMPUTC
+%%LINE	  000176
+;Expr(176): size--	
+		ld	A,(IX-1)
+		dec	A
+		ld	(IX-1),A
+%%EB	  
+%%LINE	  000177
+		pop	BC
+		jr.x	L7
+; - endwhile -
+L8:
+;
+L9:
+%%LINE	  000178
+; RET
+L12:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	size ->	offset -1	 unsigned char
+;	str -> offset 4	 pointer
+%%LINE	  000182
+%%FUNC	  memdump,3,cls=2,type=0
+_memdump:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+		push	HL
+		push	HL
+%%DFP	  2
+%%SYM	  address,14,type=4,cls=6,val=4,size=2
+%%SYM	  size,14,type=4,cls=6,val=6,size=2
+%%ENDD	  
+%%BF	  
+;	address	-> 4	(00004h)	 unsigned short
+;	size ->	6	(00006h)	 unsigned short
+%%SYM	  p,0,type=2,cls=6,val=-2,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+;	p -> -2	(0fffeh)	 pointer
+%%SYM	  count,0,type=4,cls=6,val=-4,size=2
+;	count -> -4	(0fffch)	 unsigned short
+%%SYM	  code,0,type=2,cls=6,val=-5,size=1
+;	code ->	-5	(0fffbh)	 unsigned char
+%%LINE	  000187
+;Expr(187): p=(unsigned	char *)address	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		ld	(IX-2),C
+		ld	(IX-1),B
+; - for	-
+%%LINE	  000188
+;Expr(188): count=0	
+		ld	(IX-4),0
+		ld	(IX-3),0
+L14:
+;Expr(188): size>count	
+		ld	C,(IX-4)
+		ld	B,(IX-3)
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		or	A
+		sbc	HL,BC
+		jr.x	z,L18
+		jr.x	c,L18
+;
+		jr.x	L15
+L16:
+;Expr(188): count++	
+		ld	C,(IX-4)
+		ld	B,(IX-3)
+		inc	BC
+		ld	(IX-4),C
+		ld	(IX-3),B
+		jr.x	L14
+L15:
+%%BB	  line=189
+; - if -
+%%LINE	  000190
+;Expr(190): 0==(count%16)	
+		ld	A,(IX-4)
+		and	15
+		ld	C,A
+		ld	A,(IX-3)
+		and	0
+		ld	B,A
+		ld	A,C
+		or	B
+		jr.x	nz,L20
+;
+; - then -
+%%BB	  line=191
+%%LINE	  000192
+;Expr(192): puthexshort((unsigned short)p)	
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		push	BC
+		call	_puthexshort
+%%LINE	  000193
+;Expr(193): CPMPUTC(' ')	
+		pop	BC
+		ld	C,32
+		push	BC
+		call	_CPMPUTC
+%%EB	  
+; - endif -
+;
+		pop	BC
+L20:
+%%LINE	  000195
+;Expr(195): puthex(*p++	)	
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		ld	B,(HL)
+		ld	C,B
+		push	BC
+		inc	HL
+		ld	(IX-2),L
+		ld	(IX-1),H
+		call	_puthex
+%%LINE	  000196
+;Expr(196): CPMPUTC(' ')	
+		pop	BC
+		ld	C,32
+		push	BC
+		call	_CPMPUTC
+; - if -
+%%LINE	  000197
+;Expr(197): 0==((count+	1)%16)	
+		ld	C,(IX-4)
+		ld	B,(IX-3)
+		inc	BC
+		ld	A,15
+		and	C
+		ld	E,A
+		ld	A,0
+		and	B
+		ld	D,A
+		pop	HL
+		ld	A,E
+		or	D
+		jr.x	nz,L22
+;
+; - then -
+%%BB	  line=198
+%%LINE	  000199
+;Expr(199): p=p- 16	
+		ld	DE,16
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		or	A
+		sbc	HL,DE
+		ld	(IX-2),L
+		ld	(IX-1),H
+%%LINE	  000200
+;Expr(200): CPMPUTC(' ')	
+		ld	C,32
+		push	BC
+		call	_CPMPUTC
+; - for	-
+%%LINE	  000201
+;Expr(201): code=0	
+		ld	(IX-5),0
+		pop	BC
+L23:
+;Expr(201): 16>code	
+		ld	A,(IX-5)
+		cp	16
+		jr.x	nc,L27
+;
+		jr.x	L24
+L25:
+;Expr(201): code++	
+		ld	A,(IX-5)
+		inc	A
+		ld	(IX-5),A
+		jr.x	L23
+L24:
+%%BB	  line=202
+; - if -
+%%LINE	  000203
+;Expr(203): (_ctype[*p&0177]&((0020|0001|0002|0004)|0200))	
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		ld	B,(HL)
+		ld	E,B
+		ld	D,0
+		ld	A,127
+		and	E
+		ld	C,A
+		ld	A,0
+		and	D
+		ld	B,A
+		ld	HL,__ctype
+		add	HL,BC
+		ld	C,(HL)
+		ld	A,C
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	A,151
+		and	C
+		ld	L,A
+		ld	A,0
+		and	B
+		ld	H,A
+		ld	A,L
+		or	H
+		jr.x	z,L29
+;
+; - then -
+%%BB	  line=204
+%%LINE	  000205
+;Expr(205): CPMPUTC(*p)	
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		ld	B,(HL)
+		ld	C,B
+		push	BC
+		call	_CPMPUTC
+%%EB	  
+		pop	BC
+		jr.x	L28
+; - else -
+;
+L29:
+%%BB	  line=208
+%%LINE	  000209
+;Expr(209): CPMPUTC('.')	
+		ld	C,46
+		push	BC
+		call	_CPMPUTC
+%%EB	  
+; - endif -
+		pop	BC
+L28:
+%%LINE	  000211
+;Expr(211): p++		
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		inc	BC
+		ld	(IX-2),C
+		ld	(IX-1),B
+%%EB	  
+%%LINE	  000212
+		jr.x	L25
+; - endfor -
+L26:
+;
+L27:
+%%LINE	  000213
+;Expr(213): CPMPUTC('\r')	
+		ld	C,13
+		push	BC
+		call	_CPMPUTC
+%%LINE	  000214
+;Expr(214): CPMPUTC('\n')	
+		pop	BC
+		ld	C,10
+		push	BC
+		call	_CPMPUTC
+%%EB	  
+; - endif -
+;
+		pop	BC
+L22:
+%%EB	  
+%%LINE	  000216
+		jr.x	L16
+; - endfor -
+L17:
+;
+L18:
+; - if -
+%%LINE	  000217
+;Expr(217): 0!=(count%16)	
+		ld	A,(IX-4)
+		and	15
+		ld	C,A
+		ld	A,(IX-3)
+		and	0
+		ld	B,A
+		ld	A,C
+		or	B
+		jr.x	z,L31
+;
+; - then -
+%%BB	  line=218
+; - for	-
+%%LINE	  000219
+;Expr(219): code=0	
+		ld	(IX-5),0
+L32:
+;Expr(219): (16- (count%16))>code	
+		ld	A,(IX-4)
+		and	15
+		ld	C,A
+		ld	A,(IX-3)
+		and	0
+		ld	B,A
+		ld	HL,16
+		or	A
+		sbc	HL,BC
+		ld	E,(IX-5)
+		ld	D,0
+		or	A
+		sbc	HL,DE
+		jr.x	z,L36
+		jr.x	c,L36
+;
+		jr.x	L33
+L34:
+;Expr(219): code++	
+		ld	A,(IX-5)
+		inc	A
+		ld	(IX-5),A
+		jr.x	L32
+L33:
+%%BB	  line=220
+%%LINE	  000221
+;Expr(221): print("   ")	
+		ld	BC,S1
+		push	BC
+		call	_print
+%%EB	  
+%%LINE	  000222
+		pop	BC
+		jr.x	L34
+; - endfor -
+L35:
+;
+L36:
+%%LINE	  000223
+;Expr(223): CPMPUTC(' ')	
+		ld	C,32
+		push	BC
+		call	_CPMPUTC
+%%LINE	  000224
+;Expr(224): p=p- ((count%16))	
+		ld	A,(IX-4)
+		and	15
+		ld	C,A
+		ld	A,(IX-3)
+		and	0
+		ld	B,A
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		or	A
+		sbc	HL,BC
+		ld	(IX-2),L
+		ld	(IX-1),H
+; - for	-
+%%LINE	  000225
+;Expr(225): code=0	
+		ld	(IX-5),0
+		pop	DE
+L37:
+;Expr(225): (count%16)>code	
+		ld	A,(IX-4)
+		and	15
+		ld	C,A
+		ld	A,(IX-3)
+		and	0
+		ld	B,A
+		ld	E,(IX-5)
+		ld	D,0
+		ld	H,D
+		ld	L,E
+		or	A
+		sbc	HL,BC
+		jr.x	nc,L41
+;
+		jr.x	L38
+L39:
+;Expr(225): code++	
+		ld	A,(IX-5)
+		inc	A
+		ld	(IX-5),A
+		jr.x	L37
+L38:
+%%BB	  line=226
+; - if -
+%%LINE	  000227
+;Expr(227): (_ctype[*p&0177]&((0020|0001|0002|0004)|0200))	
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		ld	B,(HL)
+		ld	E,B
+		ld	D,0
+		ld	A,127
+		and	E
+		ld	C,A
+		ld	A,0
+		and	D
+		ld	B,A
+		ld	HL,__ctype
+		add	HL,BC
+		ld	C,(HL)
+		ld	A,C
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	A,151
+		and	C
+		ld	L,A
+		ld	A,0
+		and	B
+		ld	H,A
+		ld	A,L
+		or	H
+		jr.x	z,L43
+;
+; - then -
+%%BB	  line=228
+%%LINE	  000229
+;Expr(229): CPMPUTC(*p)	
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		ld	B,(HL)
+		ld	C,B
+		push	BC
+		call	_CPMPUTC
+%%EB	  
+		pop	BC
+		jr.x	L42
+; - else -
+;
+L43:
+%%BB	  line=232
+%%LINE	  000233
+;Expr(233): CPMPUTC('.')	
+		ld	C,46
+		push	BC
+		call	_CPMPUTC
+%%EB	  
+; - endif -
+		pop	BC
+L42:
+%%LINE	  000235
+;Expr(235): p++		
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		inc	BC
+		ld	(IX-2),C
+		ld	(IX-1),B
+%%EB	  
+%%LINE	  000236
+		jr.x	L39
+; - endfor -
+L40:
+;
+L41:
+%%LINE	  000237
+;Expr(237): print("\r\n")	
+		ld	BC,S2
+		push	BC
+		call	_print
+%%EB	  
+; - endif -
+;
+		pop	BC
+L31:
+%%LINE	  000239
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	address	-> offset 4	 unsigned short
+;	p -> offset -2	 pointer
+;	count -> offset	-4	 unsigned short
+;	size ->	offset 6	 unsigned short
+;	code ->	offset -5	 unsigned char
+%%LINE	  000243
+%%FUNC	  put_iob,3,cls=2,type=0
+_put_iob:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+%%BF	  
+%%SYM	  count,0,type=2,cls=6,val=-1,size=1
+;	count -> -1	(0ffffh)	 unsigned char
+%%LINE	  000245
+;Expr(245): print(" cnt	 ptr base flag file\r\n")	
+		ld	BC,S3
+		push	BC
+		call	_print
+; - for	-
+%%LINE	  000246
+;Expr(246): count=0	
+		ld	(IX-1),0
+		pop	BC
+L45:
+;Expr(246): 20>count	
+		ld	A,(IX-1)
+		cp	20
+		jr.x	nc,L49
+;
+		jr.x	L46
+L47:
+;Expr(246): count++	
+		ld	A,(IX-1)
+		inc	A
+		ld	(IX-1),A
+		jr.x	L45
+L46:
+%%BB	  line=247
+%%LINE	  000248
+;Expr(248): puthexshort(_iob[count]._cnt)	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_puthexshort
+%%LINE	  000249
+;Expr(249): CPMPUTC(' ')	
+		pop	BC
+		ld	C,32
+		push	BC
+		call	_CPMPUTC
+%%LINE	  000250
+;Expr(250): puthexshort((short)_iob[count]._ptr)	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		inc	HL
+		inc	HL
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		push	DE
+		call	_puthexshort
+%%LINE	  000251
+;Expr(251): CPMPUTC(' ')	
+		pop	BC
+		ld	C,32
+		push	BC
+		call	_CPMPUTC
+%%LINE	  000252
+;Expr(252): puthexshort((short)_iob[count]._base)	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		inc	HL
+		inc	HL
+		inc	HL
+		inc	HL
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		push	DE
+		call	_puthexshort
+%%LINE	  000253
+;Expr(253): CPMPUTC(' ')	
+		pop	BC
+		ld	C,32
+		push	BC
+		call	_CPMPUTC
+%%LINE	  000254
+;Expr(254): puthexshort(_iob[count]._flag)	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	BC,6
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		push	DE
+		call	_puthexshort
+%%LINE	  000255
+;Expr(255): print("   ")	
+		pop	BC
+		ld	BC,S4
+		push	BC
+		call	_print
+%%LINE	  000256
+;Expr(256): puthex(_iob[count]._file)	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	DE,8
+		add	HL,DE
+		ld	B,(HL)
+		pop	HL
+		ld	C,B
+		push	BC
+		call	_puthex
+%%LINE	  000257
+;Expr(257): print("\r\n")	
+		pop	BC
+		ld	BC,S5
+		push	BC
+		call	_print
+%%EB	  
+%%LINE	  000258
+		pop	BC
+		jr.x	L47
+; - endfor -
+L48:
+;
+L49:
+%%LINE	  000259
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	count -> offset	-1	 unsigned char
+%%LINE	  000263
+%%FUNC	  init_iob,3,cls=2,type=0
+_init_iob:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+%%BF	  
+%%SYM	  count,0,type=2,cls=6,val=-1,size=1
+;	count -> -1	(0ffffh)	 unsigned char
+; - for	-
+%%LINE	  000266
+;Expr(266): count=0	
+		ld	(IX-1),0
+L51:
+;Expr(266): 20>count	
+		ld	A,(IX-1)
+		cp	20
+		jr.x	nc,L55
+;
+		jr.x	L52
+L53:
+;Expr(266): count++	
+		ld	A,(IX-1)
+		inc	A
+		ld	(IX-1),A
+		jr.x	L51
+L52:
+%%BB	  line=267
+%%LINE	  000268
+;Expr(268): _iob[count]._cnt=0	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000269
+;Expr(269): _iob[count]._ptr=(void *)0	
+		ld	E,(IX-1)
+		ld	D,0
+		ld	H,D
+		ld	L,E
+		sla	L
+		rl	H
+		sla	L
+		rl	H
+		sla	L
+		rl	H
+		add	HL,DE
+		ld	DE,__iob
+		add	HL,DE
+		ld	BC,2
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000270
+;Expr(270): _iob[count]._base=(void *)0	
+		ld	L,(IX-1)
+		ld	H,0
+		ld	B,H
+		ld	C,L
+		sla	C
+		rl	B
+		sla	C
+		rl	B
+		sla	C
+		rl	B
+		add	HL,BC
+		ld	BC,__iob
+		add	HL,BC
+		ld	BC,4
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000271
+;Expr(271): _iob[count]._flag=0	
+		ld	L,(IX-1)
+		ld	H,0
+		ld	B,H
+		ld	C,L
+		sla	C
+		rl	B
+		sla	C
+		rl	B
+		sla	C
+		rl	B
+		add	HL,BC
+		ld	BC,__iob
+		add	HL,BC
+		ld	BC,6
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000272
+;Expr(272): _iob[count]._file=007f	
+		ld	L,(IX-1)
+		ld	H,0
+		ld	B,H
+		ld	C,L
+		sla	C
+		rl	B
+		sla	C
+		rl	B
+		sla	C
+		rl	B
+		add	HL,BC
+		ld	BC,__iob
+		add	HL,BC
+		ld	BC,8
+		add	HL,BC
+		ld	(HL),127
+%%EB	  
+%%LINE	  000273
+		jr.x	L53
+; - endfor -
+L54:
+;
+L55:
+%%LINE	  000275
+;Expr(275): (&_iob[1])->_cnt=0	
+		ld	BC,__iob
+		ld	HL,9
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000276
+;Expr(276): (&_iob[1])->_ptr=(void *)0	
+		ld	DE,__iob
+		ld	HL,11
+		add	HL,DE
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000277
+;Expr(277): (&_iob[1])->_base=(void *)0	
+		ld	BC,__iob
+		ld	HL,13
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000278
+;Expr(278): (&_iob[1])->_flag=0002+ 0004	
+		ld	BC,__iob
+		ld	HL,15
+		add	HL,BC
+		ld	(HL),6
+		inc	HL
+		ld	(HL),0
+%%LINE	  000279
+;Expr(279): (&_iob[1])->_file=1	
+		ld	BC,__iob
+		ld	HL,17
+		add	HL,BC
+		ld	(HL),1
+%%LINE	  000281
+;Expr(281): (&_iob[2])->_cnt=0	
+		ld	BC,__iob
+		ld	HL,18
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000282
+;Expr(282): (&_iob[2])->_ptr=(void *)0	
+		ld	BC,__iob
+		ld	HL,20
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000283
+;Expr(283): (&_iob[2])->_base=(void *)0	
+		ld	BC,__iob
+		ld	HL,22
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000284
+;Expr(284): (&_iob[2])->_flag=0002+ 0004	
+		ld	BC,__iob
+		ld	HL,24
+		add	HL,BC
+		ld	(HL),6
+		inc	HL
+		ld	(HL),0
+%%LINE	  000285
+;Expr(285): (&_iob[2])->_file=2	
+		ld	BC,__iob
+		ld	HL,26
+		add	HL,BC
+		ld	(HL),2
+%%LINE	  000287
+;Expr(287): (&_iob[0])->_cnt=0	
+		ld	BC,0
+		ld	A,C
+		ld	(DE),A
+		inc	DE
+		ld	A,B
+		ld	(DE),A
+%%LINE	  000288
+;Expr(288): (&_iob[0])->_ptr=(void *)0	
+		ld	DE,__iob
+		ld	H,B
+		ld	L,C
+		inc	HL
+		inc	HL
+		add	HL,DE
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000289
+;Expr(289): (&_iob[0])->_base=(void *)0	
+		ld	BC,__iob
+		ld	HL,4
+		add	HL,BC
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%LINE	  000290
+;Expr(290): (&_iob[0])->_flag=0001+ 0004	
+		ld	BC,__iob
+		ld	HL,6
+		add	HL,BC
+		ld	(HL),5
+		inc	HL
+		ld	(HL),0
+%%LINE	  000291
+;Expr(291): (&_iob[0])->_file=0	
+		ld	BC,__iob
+		ld	HL,8
+		add	HL,BC
+		ld	(HL),0
+%%LINE	  000292
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	count -> offset	-1	 unsigned char
+%%LINE	  000298
+%%FUNC	  DTAvalid,3,cls=2,type=5
+_DTAvalid:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+%%DFP	  1
+%%SYM	  fd,14,type=5,cls=6,val=4,size=2
+%%ENDD	  
+%%BF	  
+; - if -
+%%LINE	  000299
+;Expr(299): _FILEBUFF[fd]->DTA_ptr>=_FILEBUFF[fd]->DTA+	0080	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,168
+		add	HL,DE
+		ld	A,E
+		add	A,37
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	C,A
+		inc	DE
+		ld	A,(DE)
+		ld	B,A
+		or	A
+		sbc	HL,BC
+		jr.x	z,L0000000281
+		jr.x	nc,L58
+L0000000281:
+;
+; - then -
+%%BB	  line=300
+; - return -
+%%LINE	  000301
+;Expr(301): 0	
+		ld	BC,0
+		jr.x	L59
+%%EB	  
+; - endif -
+;
+L58:
+; - if -
+%%LINE	  000303
+;Expr(303): _FILEBUFF[fd]->DTA_ptr<_FILEBUFF[fd]->DTA	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		ld	A,E
+		add	A,37
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	C,A
+		inc	DE
+		ld	A,(DE)
+		ld	B,A
+		or	A
+		sbc	HL,BC
+		jr.x	z,L61
+		jr.x	c,L61
+;
+; - then -
+%%BB	  line=304
+; - return -
+%%LINE	  000305
+;Expr(305): 0	
+		ld	BC,0
+		jr.x	L59
+%%EB	  
+; - endif -
+;
+L61:
+; - return -
+%%LINE	  000307
+;Expr(307): !0	
+		ld	BC,1
+		jr.x	L59
+%%LINE	  000308
+; RET
+L59:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset 4	 int
+%%LINE	  000313
+%%FUNC	  rndrecordinc,3,cls=2,type=0
+_rndrecordinc:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+%%DFP	  1
+%%SYM	  fd,14,type=5,cls=6,val=4,size=2
+%%ENDD	  
+%%BF	  
+%%LINE	  000314
+;Expr(314): _FILEBUFF[fd]->FCB.rndrecordL++	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,33
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		inc	BC
+		dec	HL
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+; - if -
+%%LINE	  000315
+;Expr(315): 0==_FILEBUFF[fd]->FCB.rndrecordL	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	A,E
+		add	A,33
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	L,A
+		inc	DE
+		ld	A,(DE)
+		ld	H,A
+		ld	A,L
+		or	H
+		jr.x	nz,L64
+;
+; - then -
+%%BB	  line=316
+%%LINE	  000318
+;Expr(318): _FILEBUFF[fd]->FCB.rndrecordH++	
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		ld	HL,35
+		add	HL,BC
+		ld	A,(HL)
+		inc	A
+		ld	(HL),A
+%%EB	  
+; - endif -
+;
+L64:
+%%LINE	  000320
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset 4	 int
+%%LINE	  000325
+%%FUNC	  rndrecorddec,3,cls=2,type=0
+_rndrecorddec:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+%%DFP	  1
+%%SYM	  fd,14,type=5,cls=6,val=4,size=2
+%%ENDD	  
+%%BF	  
+%%LINE	  000326
+;Expr(326): _FILEBUFF[fd]->FCB.rndrecordL--	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,33
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		dec	BC
+		dec	HL
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+; - if -
+%%LINE	  000327
+;Expr(327): 00ffff==_FILEBUFF[fd]->FCB.rndrecordL	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	A,E
+		add	A,33
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	L,A
+		inc	DE
+		ld	A,(DE)
+		ld	H,A
+		ld	D,H
+		ld	E,L
+		ld	HL,65535
+		or	A
+		sbc	HL,DE
+		jr.x	nz,L67
+;
+; - then -
+%%BB	  line=328
+; - if -
+%%LINE	  000329
+;Expr(329): 0==_FILEBUFF[fd]->FCB.rndrecordH	
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		sla	L
+		rl	H
+		ld	BC,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	A,E
+		add	A,35
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	B,A
+		ld	A,B
+		or	A
+		jr.x	nz,L69
+;
+; - then -
+%%BB	  line=330
+%%LINE	  000332
+;Expr(332): _FILEBUFF[fd]->FCB.rndrecordL=0	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,33
+		add	HL,DE
+		ld	(HL),0
+		inc	HL
+		ld	(HL),0
+%%EB	  
+		jr.x	L68
+; - else -
+;
+L69:
+%%BB	  line=335
+%%LINE	  000337
+;Expr(337): _FILEBUFF[fd]->FCB.rndrecordH--	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,35
+		add	HL,DE
+		ld	A,(HL)
+		dec	A
+		ld	(HL),A
+%%EB	  
+; - endif -
+L68:
+%%EB	  
+; - endif -
+;
+L67:
+%%LINE	  000340
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset 4	 int
+%%LINE	  000348
+%%FUNC	  extractfilename,3,cls=2,type=1
+_extractfilename:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		ld	HL,-10
+		add	HL,SP
+		ld	SP,HL
+%%DFP	  2
+%%SYM	  name,14,type=1,cls=6,val=4,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  FCB,14,sym=3,cls=6,val=6,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%ENDD	  
+%%BF	  
+;	name ->	4	(00004h)	 pointer
+;	FCB -> 6	(00006h)	 pointer
+%%SYM	  src,0,type=2,cls=6,val=-1,size=1
+;	src -> -1	(0ffffh)	 unsigned char
+%%SYM	  dst,0,type=2,cls=6,val=-2,size=1
+;	dst -> -2	(0fffeh)	 unsigned char
+%%LINE	  000352
+;Expr(352): memset(FCB->filename,0020,11)	
+		ld	BC,11
+		push	BC
+		ld	DE,32
+		push	DE
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		inc	HL
+		push	HL
+		call	_memset
+; - for	-
+%%LINE	  000355
+;Expr(355): src=0	
+		ld	(IX-1),0
+		pop	BC
+		pop	BC
+		pop	BC
+L71:
+;Expr(355): 0!=name[src]	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	A,B
+		or	A
+		jr.x	z,L75
+;
+		jr.x	L72
+L73:
+;Expr(355): src++	
+		ld	A,(IX-1)
+		inc	A
+		ld	(IX-1),A
+		jr.x	L71
+L72:
+%%BB	  line=356
+; - if -
+%%LINE	  000357
+;Expr(357): 20<src	
+		ld	A,(IX-1)
+		cp	20
+		jr.x	z,L77
+		jr.x	c,L77
+;
+; - then -
+; - return -
+%%LINE	  000358
+;Expr(358): 0	
+		ld	C,0
+		jr.x	L78
+; - endif -
+;
+L77:
+%%LINE	  000359
+;Expr(359): name[src]=(name[src]>='a'&&name[src]<='z'?(name[src]+ ('A'-	'a')):name[src])	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	A,B
+		cp	97
+		jp	m,L0000000282
+		jp	po,L0000000283
+		jr.x	L79
+L0000000282:
+		jp	po,L79
+L0000000283:
+;
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	A,B
+		cp	122
+		jr.x	z,L0000000285
+		jp	m,L0000000284
+		jp	pe,L0000000285
+		jr.x	L80
+L0000000284:
+		jp	pe,L80
+L0000000285:
+;
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	A,B
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	DE,32
+		ld	H,B
+		ld	L,C
+		or	A
+		sbc	HL,DE
+		ld	(IX-4),L
+		ld	(IX-3),H
+		ld	(IX-6),L
+		ld	(IX-5),H
+		jr.x	L81
+L80:
+L79:
+;
+		ld	C,(IX-1)
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	A,B
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	(IX-4),C
+		ld	(IX-3),B
+		ld	(IX-8),C
+		ld	(IX-7),B
+L81:
+;
+		ld	A,(IX-4)
+		ld	C,(IX-1)
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	(HL),A
+%%EB	  
+%%LINE	  000360
+		jr.x	L73
+; - endfor -
+L74:
+;
+L75:
+%%LINE	  000363
+;Expr(363): FCB->drive=0	
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		ld	(HL),0
+%%LINE	  000364
+;Expr(364): src=0	
+		ld	(IX-1),0
+; - if -
+%%LINE	  000365
+;Expr(365): ':'==name[1]	
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		inc	HL
+		ld	B,(HL)
+		ld	A,B
+		cp	58
+		jr.x	nz,L83
+;
+; - then -
+%%BB	  line=366
+; - if -
+%%LINE	  000368
+;Expr(368): ('A'<=name[0])&&('P'>=name[0])	
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		ld	C,(HL)
+		ld	A,C
+		cp	65
+		jp	m,L0000000286
+		jp	po,L0000000287
+		jr.x	L85
+L0000000286:
+		jp	po,L85
+L0000000287:
+;
+		ld	D,(HL)
+		ld	A,D
+		cp	80
+		jr.x	z,L0000000289
+		jp	m,L0000000288
+		jp	pe,L0000000289
+		jr.x	L86
+L0000000288:
+		jp	pe,L86
+L0000000289:
+;
+; - then -
+%%BB	  line=369
+%%LINE	  000374
+;Expr(374): FCB->drive=name[0]-	'A'+ 1	
+		ld	E,(HL)
+		ld	A,E
+		sub	64
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		ld	(HL),A
+%%LINE	  000375
+;Expr(375): src=2	
+		ld	(IX-1),2
+%%EB	  
+		jr.x	L84
+; - else -
+;
+L86:
+L85:
+%%BB	  line=378
+; - return -
+%%LINE	  000379
+;Expr(379): 0	
+		ld	C,0
+		jr.x	L78
+%%EB	  
+; - endif -
+L84:
+%%EB	  
+; - endif -
+;
+L83:
+; - for	-
+%%LINE	  000384
+;Expr(384): dst=0	
+		ld	(IX-2),0
+L87:
+;Expr(384): dst<8	
+		ld	A,(IX-2)
+		cp	8
+		jr.x	nc,L91
+;
+		jr.x	L88
+L89:
+;Expr(384): dst++	
+		ld	A,(IX-2)
+		inc	A
+		ld	(IX-2),A
+		jr.x	L87
+L88:
+%%BB	  line=385
+; - if -
+%%LINE	  000386
+;Expr(386): 0==name[src]	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	A,B
+		or	A
+		jr.x	nz,L93
+;
+; - then -
+; - return -
+%%LINE	  000387
+;Expr(387): !0	
+		ld	C,1
+		jr.x	L78
+; - endif -
+;
+L93:
+; - if -
+%%LINE	  000388
+;Expr(388): '.'==name[src]	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	A,B
+		cp	46
+		jr.x	nz,L95
+;
+; - then -
+%%BB	  line=389
+%%LINE	  000390
+;Expr(390): src++	
+		inc	C
+		ld	(IX-1),C
+; - break -
+%%LINE	  000391
+		jr.x	L90
+%%EB	  
+; - endif -
+;
+L95:
+%%LINE	  000393
+;Expr(393): FCB->filename[dst]=name[src++ ]	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	E,(IX+6)
+		ld	D,(IX+7)
+		inc	DE
+		ld	L,(IX-2)
+		ld	H,0
+		ld	(IX-9),B
+		add	HL,DE
+		ld	A,(IX-9)
+		ld	(HL),A
+		ld	A,(IX-1)
+		inc	A
+		ld	(IX-1),A
+%%EB	  
+%%LINE	  000394
+		jr.x	L89
+; - endfor -
+L90:
+;
+L91:
+; - for	-
+%%LINE	  000397
+;Expr(397): dst=8	
+		ld	(IX-2),8
+L96:
+;Expr(397): dst<11	
+		ld	A,(IX-2)
+		cp	11
+		jr.x	nc,L100
+;
+		jr.x	L97
+L98:
+;Expr(397): dst++	
+		ld	A,(IX-2)
+		inc	A
+		ld	(IX-2),A
+		jr.x	L96
+L97:
+%%BB	  line=398
+; - if -
+%%LINE	  000399
+;Expr(399): 0==name[src]	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	A,B
+		or	A
+		jr.x	nz,L102
+;
+; - then -
+; - return -
+%%LINE	  000400
+;Expr(400): !0	
+		ld	C,1
+		jr.x	L78
+; - endif -
+;
+L102:
+%%LINE	  000401
+;Expr(401): FCB->filename[dst]=name[src++ ]	
+		ld	C,(IX-1)
+		ld	B,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,BC
+		ld	B,(HL)
+		ld	E,(IX+6)
+		ld	D,(IX+7)
+		inc	DE
+		ld	L,(IX-2)
+		ld	H,0
+		ld	(IX-9),B
+		add	HL,DE
+		ld	A,(IX-9)
+		ld	(HL),A
+		ld	A,(IX-1)
+		inc	A
+		ld	(IX-1),A
+%%EB	  
+%%LINE	  000402
+		jr.x	L98
+; - endfor -
+L99:
+;
+L100:
+; - return -
+%%LINE	  000403
+;Expr(403): !0	
+		ld	C,1
+		jr.x	L78
+%%LINE	  000404
+; RET
+L78:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	FCB -> offset 6	 pointer
+;	src -> offset -1	 unsigned char
+;	name ->	offset 4	 pointer
+;	dst -> offset -2	 unsigned char
+%%LINE	  000409
+%%FUNC	  fdempty,3,cls=2,type=1
+_fdempty:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+%%BF	  
+%%SYM	  fd,0,type=1,cls=6,val=-1,size=1
+;	fd -> -1	(0ffffh)	 char
+; - for	-
+%%LINE	  000411
+;Expr(411): fd=3	
+		ld	(IX-1),3
+L104:
+;Expr(411): 20>fd	
+		ld	A,(IX-1)
+		cp	20
+		jp	m,L0000000290
+		jp	pe,L0000000291
+		jr.x	L108
+L0000000290:
+		jp	pe,L108
+L0000000291:
+;
+		jr.x	L105
+L106:
+;Expr(411): fd++	
+		ld	A,(IX-1)
+		inc	A
+		ld	(IX-1),A
+		jr.x	L104
+L105:
+%%BB	  line=412
+; - if -
+%%LINE	  000415
+;Expr(415): 007e==_iob[fd]._file	
+		ld	A,(IX-1)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	DE,8
+		add	HL,DE
+		ld	B,(HL)
+		ld	A,B
+		cp	126
+		jr.x	nz,L110
+;
+; - then -
+; - return -
+%%LINE	  000416
+;Expr(416): fd	
+		ld	C,(IX-1)
+		jr.x	L111
+; - endif -
+;
+L110:
+%%EB	  
+%%LINE	  000417
+		jr.x	L106
+; - endfor -
+L107:
+;
+L108:
+; - return -
+%%LINE	  000418
+;Expr(418): - 1	
+		ld	C,255
+		jr.x	L111
+%%LINE	  000419
+; RET
+L111:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset -1	 char
+%%LINE	  000424
+%%FUNC	  fdallocate,3,cls=2,type=1
+_fdallocate:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+%%BF	  
+%%SYM	  fd,0,type=1,cls=6,val=-1,size=1
+;	fd -> -1	(0ffffh)	 char
+; - for	-
+%%LINE	  000426
+;Expr(426): fd=3	
+		ld	(IX-1),3
+L113:
+;Expr(426): 20>fd	
+		ld	A,(IX-1)
+		cp	20
+		jp	m,L0000000292
+		jp	pe,L0000000293
+		jr.x	L117
+L0000000292:
+		jp	pe,L117
+L0000000293:
+;
+		jr.x	L114
+L115:
+;Expr(426): fd++	
+		ld	A,(IX-1)
+		inc	A
+		ld	(IX-1),A
+		jr.x	L113
+L114:
+%%BB	  line=427
+; - if -
+%%LINE	  000430
+;Expr(430): 007f==_iob[fd]._file	
+		ld	A,(IX-1)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	DE,8
+		add	HL,DE
+		ld	B,(HL)
+		ld	A,B
+		cp	127
+		jr.x	nz,L119
+;
+; - then -
+; - return -
+%%LINE	  000431
+;Expr(431): fd	
+		ld	C,(IX-1)
+		jr.x	L120
+; - endif -
+;
+L119:
+%%EB	  
+%%LINE	  000432
+		jr.x	L115
+; - endfor -
+L116:
+;
+L117:
+; - return -
+%%LINE	  000433
+;Expr(433): - 1	
+		ld	C,255
+		jr.x	L120
+%%LINE	  000434
+; RET
+L120:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset -1	 char
+%%LINE	  000440
+%%FUNC	  fdget,3,cls=2,type=1
+_fdget:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+%%BF	  
+%%SYM	  fd,0,type=1,cls=6,val=-1,size=1
+;	fd -> -1	(0ffffh)	 char
+%%LINE	  000442
+;Expr(442): fd=fdempty()	
+		call	_fdempty
+		ld	(IX-1),C
+; - if -
+%%LINE	  000443
+;Expr(443): - 1!=fd	
+		ld	A,C
+		cp	-1
+		jr.x	z,L123
+;
+; - then -
+%%BB	  line=444
+; - return -
+%%LINE	  000447
+;Expr(447): fd	
+		ld	C,(IX-1)
+		jr.x	L124
+%%EB	  
+; - endif -
+;
+L123:
+%%LINE	  000450
+;Expr(450): fd=fdallocate()	
+		call	_fdallocate
+		ld	(IX-1),C
+; - if -
+%%LINE	  000451
+;Expr(451): - 1!=fd	
+		ld	A,C
+		cp	-1
+		jr.x	z,L126
+;
+; - then -
+%%BB	  line=452
+; - if -
+%%LINE	  000454
+;Expr(454): 0!=(_FILEBUFF[fd]=malloc(sizeof(*_FILEBUFF[0])))	
+		ld	BC,168
+		push	BC
+		call	_malloc
+		ld	A,(IX-1)
+		ld	E,A
+		rla
+		sbc	A,A
+		ld	D,A
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	D,B
+		ld	E,C
+		ld	(HL),E
+		inc	HL
+		ld	(HL),D
+		pop	DE
+		ld	A,C
+		or	B
+		jr.x	z,L128
+;
+; - then -
+%%BB	  line=455
+; - return -
+%%LINE	  000457
+;Expr(457): fd	
+		ld	C,(IX-1)
+		jr.x	L124
+%%EB	  
+; - endif -
+;
+L128:
+%%EB	  
+; - endif -
+;
+L126:
+; - return -
+%%LINE	  000462
+;Expr(462): - 1	
+		ld	C,255
+		jr.x	L124
+%%LINE	  000463
+; RET
+L124:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset -1	 char
+%%LINE	  000467
+%%FUNC	  conout,3,cls=2,type=0
+_conout:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+%%DFP	  2
+%%SYM	  buf,14,type=1,cls=6,val=4,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  size,14,type=5,cls=6,val=6,size=2
+%%ENDD	  
+%%BF	  
+; - while -
+L130:
+%%LINE	  000468
+;Expr(468): size	
+		ld	A,(IX+6)
+		or	(IX+7)
+		jr.x	z,L132
+;
+%%BB	  line=469
+%%LINE	  000470
+;Expr(470): CPMPUTC(*buf++ )	
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		ld	B,(HL)
+		ld	C,B
+		push	BC
+		inc	HL
+		ld	(IX+4),L
+		ld	(IX+5),H
+		call	_CPMPUTC
+%%LINE	  000471
+;Expr(471): size--	
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		dec	BC
+		ld	(IX+6),C
+		ld	(IX+7),B
+%%EB	  
+%%LINE	  000472
+		pop	DE
+		jr.x	L130
+; - endwhile -
+L131:
+;
+L132:
+%%LINE	  000473
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	size ->	offset 6	 int
+;	buf -> offset 4	 pointer
+%%LINE	  000481
+%%FUNC	  INIT_CPMSTDIO,3,cls=2,type=0
+_INIT_CPMSTDIO:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+		push	HL
+%%BF	  
+%%SYM	  heapsize,0,type=4,cls=6,val=-2,size=2
+;	heapsize -> -2	(0fffeh)	 unsigned short
+%%SYM	  SP,0,type=4,cls=6,val=-4,size=2
+;	SP -> -4	(0fffch)	 unsigned short
+%%LINE	  000484
+;Expr(484): print("INIT_CPMSTDIO\r\n")	
+		ld	BC,S6
+		push	BC
+		call	_print
+%%LINE	  000485
+;Expr(485): print("SP:")	
+		pop	BC
+		ld	BC,S7
+		push	BC
+		call	_print
+%%LINE	  000486
+;Expr(486): SP=_GETSPREG()	
+		call	__GETSPREG
+		ld	(IX-4),C
+		ld	(IX-3),B
+%%LINE	  000487
+;Expr(487): puthexshort(SP)	
+		pop	DE
+		push	BC
+		call	_puthexshort
+%%LINE	  000488
+;Expr(488): CPMPUTC(' ')	
+		pop	BC
+		ld	C,32
+		push	BC
+		call	_CPMPUTC
+%%LINE	  000491
+;Expr(491): HEAPMEMORY.start=_GETENDADDR()	
+		call	__GETENDADDR
+		ld	(_HEAPMEMORY),BC
+%%LINE	  000493
+;Expr(493): HEAPMEMORY.end=(*((unsigned	short *)(000006))- 1)	
+		ld	DE,(6)
+		dec	DE
+		ld	BC,_HEAPMEMORY
+		ld	HL,2
+		add	HL,BC
+		ld	(HL),E
+		inc	HL
+		ld	(HL),D
+%%LINE	  000494
+;Expr(494): HEAPMEMORY.point=HEAPMEMORY.start	
+		ld	DE,_HEAPMEMORY
+		ld	HL,4
+		add	HL,DE
+		ld	BC,(_HEAPMEMORY)
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+%%LINE	  000495
+;Expr(495): heapsize=(unsigned short)HEAPMEMORY.end- (unsigned short)HEAPMEMORY.start	
+		ld	BC,(_HEAPMEMORY)
+		ld	HL,(_HEAPMEMORY+2)
+		or	A
+		sbc	HL,BC
+		ld	(IX-2),L
+		ld	(IX-1),H
+%%LINE	  000497
+;Expr(497): print("HEAP	")	
+		pop	BC
+		ld	BC,S8
+		push	BC
+		call	_print
+%%LINE	  000498
+;Expr(498): puthexshort((unsigned short)HEAPMEMORY.start)	
+		pop	BC
+		ld	BC,(_HEAPMEMORY)
+		push	BC
+		call	_puthexshort
+%%LINE	  000499
+;Expr(499): print(" - ")	
+		pop	BC
+		ld	BC,S9
+		push	BC
+		call	_print
+%%LINE	  000500
+;Expr(500): puthexshort((unsigned short)HEAPMEMORY.end)	
+		pop	BC
+		ld	BC,(_HEAPMEMORY+2)
+		push	BC
+		call	_puthexshort
+%%LINE	  000501
+;Expr(501): print(" SIZE ")	
+		pop	BC
+		ld	BC,S10
+		push	BC
+		call	_print
+%%LINE	  000502
+;Expr(502): puthexshort(heapsize)	
+		pop	BC
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		push	BC
+		call	_puthexshort
+%%LINE	  000503
+;Expr(503): print("\r\n")	
+		pop	BC
+		ld	BC,S11
+		push	BC
+		call	_print
+%%LINE	  000505
+;Expr(505): init_iob()	
+		call	_init_iob
+%%LINE	  000506
+;Expr(506): print("_iob	init SP:")	
+		pop	BC
+		ld	BC,S12
+		push	BC
+		call	_print
+%%LINE	  000507
+;Expr(507): puthexshort(_GETSPREG())	
+		call	__GETSPREG
+		pop	DE
+		push	BC
+		call	_puthexshort
+%%LINE	  000508
+;Expr(508): print("\r\n")	
+		pop	BC
+		ld	BC,S13
+		push	BC
+		call	_print
+%%LINE	  000510
+;Expr(510): put_iob()	
+		call	_put_iob
+%%LINE	  000511
+;Expr(511): print("_FILEBUFF SIZE ")	
+		pop	BC
+		ld	BC,S14
+		push	BC
+		call	_print
+%%LINE	  000512
+;Expr(512): puthexshort(sizeof(*_FILEBUFF[0]))	
+		pop	BC
+		ld	BC,168
+		push	BC
+		call	_puthexshort
+%%LINE	  000513
+;Expr(513): print("\r\n")	
+		pop	BC
+		ld	BC,S15
+		push	BC
+		call	_print
+%%LINE	  000515
+;Expr(515): print("init	end SP:")	
+		pop	BC
+		ld	BC,S16
+		push	BC
+		call	_print
+%%LINE	  000516
+;Expr(516): SP=_GETSPREG()	
+		call	__GETSPREG
+		ld	(IX-4),C
+		ld	(IX-3),B
+%%LINE	  000517
+;Expr(517): puthexshort(SP)	
+		pop	DE
+		push	BC
+		call	_puthexshort
+%%LINE	  000518
+;Expr(518): print("\r\n")	
+		pop	BC
+		ld	BC,S17
+		push	BC
+		call	_print
+%%LINE	  000519
+;Expr(519): memdump(0,00100)	
+		pop	BC
+		ld	BC,256
+		push	BC
+		ld	DE,0
+		push	DE
+		call	_memdump
+%%LINE	  000525
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	SP -> offset -4	 unsigned short
+;	heapsize -> offset -2	 unsigned short
+%%LINE	  000529
+%%FUNC	  abort,3,cls=2,type=0
+_abort:
+%%BF	  
+%%LINE	  000530
+;Expr(530): print("abort ")	
+		ld	BC,S18
+		push	BC
+		call	_print
+%%LINE	  000532
+;Expr(532): CPMRESET()	
+		call	_CPMRESET
+%%LINE	  000533
+%%EF	  
+		pop	BC
+		ret
+%%FEND	  
+%%LINE	  000538
+%%FUNC	  _exit,3,cls=2,type=0
+__exit:
+%%DFP	  1
+%%SYM	  status,14,type=5,cls=6,val=4,size=2
+%%ENDD	  
+%%BF	  
+%%LINE	  000539
+;Expr(539): print("_exit ")	
+		ld	BC,S19
+		push	BC
+		call	_print
+%%LINE	  000541
+;Expr(541): CPMRESET()	
+		call	_CPMRESET
+%%LINE	  000542
+%%EF	  
+		pop	BC
+		ret
+%%FEND	  
+%%LINE	  000546
+%%FUNC	  sbrk,3,cls=2,type=0
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+_sbrk:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+%%DFP	  1
+%%SYM	  size,14,type=6,cls=6,val=4,size=2
+%%ENDD	  
+%%BF	  
+;	size ->	4	(00004h)	 unsigned int
+%%SYM	  result,0,type=0,cls=6,val=-2,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+;	result -> -2	(0fffeh)	 pointer
+%%LINE	  000549
+;Expr(549): print("sbrk: size ")	
+		ld	BC,S20
+		push	BC
+		call	_print
+%%LINE	  000550
+;Expr(550): puthexshort(size)	
+		pop	BC
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_puthexshort
+%%LINE	  000551
+;Expr(551): CPMPUTC(' ')	
+		pop	BC
+		ld	C,32
+		push	BC
+		call	_CPMPUTC
+; - if -
+%%LINE	  000553
+;Expr(553): ((unsigned int)(HEAPMEMORY.end- HEAPMEMORY.point))>=size	
+		ld	BC,(_HEAPMEMORY+4)
+		ld	A,(_HEAPMEMORY+2)
+		sub	C
+		ld	E,A
+		ld	A,(_HEAPMEMORY+3)
+		sbc	A,B
+		ld	D,A
+		pop	HL
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		or	A
+		sbc	HL,DE
+		jr.x	z,L0000000294
+		jr.x	nc,L138
+L0000000294:
+;
+; - then -
+%%BB	  line=554
+%%LINE	  000556
+;Expr(556): result=HEAPMEMORY.point	
+		ld	(IX-2),C
+		ld	(IX-1),B
+%%LINE	  000557
+;Expr(557): HEAPMEMORY.point=(void *)((char *)HEAPMEMORY.point+	size)	
+		ld	BC,_HEAPMEMORY
+		ld	HL,4
+		add	HL,BC
+		ld	A,(IX+4)
+		add	A,(HL)
+		ld	(HL),A
+		ld	A,(IX+5)
+		inc	HL
+		adc	A,(HL)
+		ld	(HL),A
+%%LINE	  000562
+;Expr(562): print("address ")	
+		ld	DE,S21
+		push	DE
+		call	_print
+%%LINE	  000563
+;Expr(563): puthexshort((unsigned short)result)	
+		pop	BC
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		push	BC
+		call	_puthexshort
+%%LINE	  000564
+;Expr(564): print(" point ")	
+		pop	BC
+		ld	BC,S22
+		push	BC
+		call	_print
+%%LINE	  000565
+;Expr(565): puthexshort((unsigned short)HEAPMEMORY.point)	
+		pop	BC
+		ld	BC,(_HEAPMEMORY+4)
+		push	BC
+		call	_puthexshort
+%%LINE	  000566
+;Expr(566): print("\r\n")	
+		pop	BC
+		ld	BC,S23
+		push	BC
+		call	_print
+%%EB	  
+		pop	BC
+		jr.x	L137
+; - else -
+;
+L138:
+%%BB	  line=569
+%%LINE	  000571
+;Expr(571): result=(void *)0	
+		ld	BC,0
+		ld	(IX-2),C
+		ld	(IX-1),B
+%%LINE	  000572
+;Expr(572): print("sbrk: memory	full\r\n")	
+		ld	DE,S24
+		push	DE
+		call	_print
+%%EB	  
+; - endif -
+		pop	BC
+L137:
+; - return -
+%%LINE	  000575
+;Expr(575): result	
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		jr.x	L139
+%%LINE	  000576
+; RET
+L139:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	size ->	offset 4	 unsigned int
+;	result -> offset -2	 pointer
+%%LINE	  000582
+%%FUNC	  close,3,cls=2,type=5
+_close:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+%%DFP	  1
+%%SYM	  fd,14,type=5,cls=6,val=4,size=2
+%%ENDD	  
+%%BF	  
+%%LINE	  000583
+;Expr(583): print("close fd:")	
+		ld	BC,S25
+		push	BC
+		call	_print
+%%LINE	  000584
+;Expr(584): puthex(fd)	
+		pop	BC
+		ld	C,(IX+4)
+		push	BC
+		call	_puthex
+%%LINE	  000585
+;Expr(585): print(" ")	
+		pop	BC
+		ld	BC,S26
+		push	BC
+		call	_print
+; - if -
+%%LINE	  000587
+;Expr(587): 0==fd	
+		pop	BC
+		ld	A,(IX+4)
+		or	(IX+5)
+		jr.x	nz,L142
+;
+; - then -
+%%BB	  line=588
+; - return -
+%%LINE	  000589
+;Expr(589): 0	
+		ld	BC,0
+		jr.x	L143
+%%EB	  
+; - endif -
+;
+L142:
+; - if -
+%%LINE	  000591
+;Expr(591): 1==fd	
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		ld	BC,1
+		or	A
+		sbc	HL,BC
+		jr.x	nz,L145
+;
+; - then -
+%%BB	  line=592
+; - return -
+%%LINE	  000593
+;Expr(593): 0	
+		dec	BC
+		jr.x	L143
+%%EB	  
+; - endif -
+;
+L145:
+; - if -
+%%LINE	  000595
+;Expr(595): 2==fd	
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		ld	BC,2
+		or	A
+		sbc	HL,BC
+		jr.x	nz,L147
+;
+; - then -
+%%BB	  line=596
+; - return -
+%%LINE	  000597
+;Expr(597): 0	
+		dec	BC
+		dec	BC
+		jr.x	L143
+%%EB	  
+; - endif -
+;
+L147:
+; - if -
+%%LINE	  000600
+;Expr(600): fd!=_iob[fd]._file	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	DE,__iob
+		add	HL,DE
+		inc	HL
+		inc	HL
+		inc	HL
+		inc	HL
+		inc	HL
+		inc	HL
+		inc	HL
+		inc	HL
+		ld	D,(HL)
+		ld	A,D
+		ld	E,A
+		rla
+		sbc	A,A
+		ld	D,A
+		ld	H,D
+		ld	L,E
+		or	A
+		sbc	HL,BC
+		jr.x	z,L149
+;
+; - then -
+%%BB	  line=601
+%%LINE	  000603
+;Expr(603): print("close NG invfd\r\n")	
+		ld	HL,S27
+		push	HL
+		call	_print
+; - return -
+%%LINE	  000604
+;Expr(604): - 1	
+		ld	BC,65535
+		pop	HL
+		jr.x	L143
+%%EB	  
+; - endif -
+;
+L149:
+; - if -
+%%LINE	  000610
+;Expr(610): 0!=_FILEBUFF[fd]->DTA_written	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	A,E
+		add	A,39
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	B,A
+		ld	A,B
+		or	A
+		jr.x	z,L151
+;
+; - then -
+%%BB	  line=611
+%%LINE	  000612
+;Expr(612): rndrecorddec(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecorddec
+%%LINE	  000614
+;Expr(614): CPMSETDTA(_FILEBUFF[fd]->DTA)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		pop	BC
+		push	HL
+		call	_CPMSETDTA
+; - if -
+%%LINE	  000615
+;Expr(615): 0000!=CPMRNDWRITE(_FILEBUFF[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		push	DE
+		call	_CPMRNDWRITE
+		pop	DE
+		ld	A,C
+		or	A
+		jr.x	z,L153
+;
+; - then -
+%%BB	  line=616
+%%LINE	  000617
+;Expr(617): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+; - return -
+%%LINE	  000618
+;Expr(618): - 1	
+		ld	BC,65535
+		pop	HL
+		jr.x	L143
+%%EB	  
+; - endif -
+;
+L153:
+%%LINE	  000620
+;Expr(620): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+%%LINE	  000621
+;Expr(621): _FILEBUFF[fd]->DTA_written=0	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,39
+		add	HL,DE
+		ld	(HL),0
+%%EB	  
+; - endif -
+;
+		pop	BC
+L151:
+; - if -
+%%LINE	  000624
+;Expr(624): 0000==CPMCLOSE(_FILEBUFF[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_CPMCLOSE
+		pop	DE
+		ld	A,C
+		or	A
+		jr.x	nz,L155
+;
+; - then -
+%%BB	  line=625
+%%LINE	  000627
+;Expr(627): _iob[fd]._file=007e	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	DE,8
+		add	HL,DE
+		ld	(HL),126
+%%LINE	  000629
+;Expr(629): print("CPMCLOSE OK\r\n")	
+		ld	DE,S28
+		push	DE
+		call	_print
+; - return -
+%%LINE	  000630
+;Expr(630): 0	
+		ld	BC,0
+		pop	HL
+		jr.x	L143
+%%EB	  
+; - endif -
+;
+L155:
+%%LINE	  000633
+;Expr(633): print("CPMCLOSE NG\r\n")	
+		ld	BC,S29
+		push	BC
+		call	_print
+; - return -
+%%LINE	  000634
+;Expr(634): - 1	
+		ld	BC,65535
+		pop	HL
+		jr.x	L143
+%%LINE	  000635
+; RET
+L143:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset 4	 int
+%%LINE	  000644
+%%FUNC	  createopen,3,cls=2,type=5
+_createopen:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		ld	HL,-32
+		add	HL,SP
+		ld	SP,HL
+%%DFP	  3
+%%SYM	  name,14,type=1,cls=6,val=4,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  mode,14,type=5,cls=6,val=6,size=2
+%%SYM	  openmode,14,type=1,cls=6,val=8,size=1
+%%ENDD	  
+%%BF	  
+;	name ->	4	(00004h)	 pointer
+;	mode ->	6	(00006h)	 int
+;	openmode -> 8	(00008h)	 char
+%%SYM	  pos,0,type=2,cls=6,val=-1,size=1
+;	pos -> -1	(0ffffh)	 unsigned char
+%%SYM	  fd,0,type=1,cls=6,val=-2,size=1
+;	fd -> -2	(0fffeh)	 char
+; - if -
+%%LINE	  000649
+;Expr(649): name[1]==':'	
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		inc	HL
+		ld	B,(HL)
+		ld	A,B
+		cp	58
+		jr.x	nz,L158
+;
+; - then -
+%%BB	  line=650
+%%LINE	  000651
+;Expr(651): pos=2	
+		ld	(IX-1),2
+%%EB	  
+		jr.x	L157
+; - else -
+;
+L158:
+%%BB	  line=654
+%%LINE	  000655
+;Expr(655): pos=0	
+		ld	(IX-1),0
+%%EB	  
+; - endif -
+L157:
+; - if -
+%%LINE	  000659
+;Expr(659): 0==strcmp(&name[pos],"CON")	
+		ld	BC,S30
+		push	BC
+		ld	E,(IX-1)
+		ld	D,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,DE
+		push	HL
+		call	_strcmp
+		pop	DE
+		pop	DE
+		ld	A,C
+		or	B
+		jr.x	nz,L160
+;
+; - then -
+%%BB	  line=660
+; - if -
+%%LINE	  000661
+;Expr(661): 0001==mode	
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		ld	DE,1
+		or	A
+		sbc	HL,DE
+		jr.x	nz,L162
+;
+; - then -
+%%BB	  line=662
+; - return -
+%%LINE	  000664
+;Expr(664): 1	
+		ld	B,D
+		ld	C,E
+		jr.x	L163
+%%EB	  
+; - endif -
+;
+L162:
+%%EB	  
+; - endif -
+;
+L160:
+; - if -
+%%LINE	  000667
+;Expr(667): 0==strcmp(&name[pos],"CON")	
+		ld	BC,S31
+		push	BC
+		ld	E,(IX-1)
+		ld	D,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,DE
+		push	HL
+		call	_strcmp
+		pop	DE
+		pop	DE
+		ld	A,C
+		or	B
+		jr.x	nz,L165
+;
+; - then -
+%%BB	  line=668
+; - if -
+%%LINE	  000669
+;Expr(669): 0001==mode	
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		ld	DE,1
+		or	A
+		sbc	HL,DE
+		jr.x	nz,L167
+;
+; - then -
+%%BB	  line=670
+; - return -
+%%LINE	  000672
+;Expr(672): 2	
+		ld	B,D
+		ld	C,E
+		inc	BC
+		jr.x	L163
+%%EB	  
+; - endif -
+;
+L167:
+%%EB	  
+; - endif -
+;
+L165:
+; - if -
+%%LINE	  000675
+;Expr(675): 0==strcmp(&name[pos],"CON")	
+		ld	BC,S32
+		push	BC
+		ld	E,(IX-1)
+		ld	D,0
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		add	HL,DE
+		push	HL
+		call	_strcmp
+		pop	DE
+		pop	DE
+		ld	A,C
+		or	B
+		jr.x	nz,L169
+;
+; - then -
+%%BB	  line=676
+; - if -
+%%LINE	  000677
+;Expr(677): 0000==mode	
+		ld	A,(IX+6)
+		or	(IX+7)
+		jr.x	nz,L171
+;
+; - then -
+%%BB	  line=678
+; - return -
+%%LINE	  000680
+;Expr(680): 0	
+		ld	BC,0
+		jr.x	L163
+%%EB	  
+; - endif -
+;
+L171:
+%%EB	  
+; - endif -
+;
+L169:
+%%LINE	  000685
+;Expr(685): fd=fdget()	
+		call	_fdget
+		ld	(IX-2),C
+%%LINE	  000686
+;Expr(686): print("fd:")	
+		ld	BC,S33
+		push	BC
+		call	_print
+%%LINE	  000687
+;Expr(687): puthex(fd)	
+		pop	BC
+		ld	C,(IX-2)
+		push	BC
+		call	_puthex
+%%LINE	  000688
+;Expr(688): print("\r\n")	
+		pop	BC
+		ld	BC,S34
+		push	BC
+		call	_print
+; - if -
+%%LINE	  000690
+;Expr(690): - 1==fd	
+		pop	BC
+		ld	A,(IX-2)
+		cp	-1
+		jr.x	nz,L173
+;
+; - then -
+; - return -
+%%LINE	  000691
+;Expr(691): - 1	
+		ld	BC,65535
+		jr.x	L163
+; - endif -
+;
+L173:
+%%LINE	  000695
+;Expr(695): memset(_FILEBUFF[fd],0,sizeof(*_FILEBUFF[fd]))	
+		ld	BC,168
+		push	BC
+		ld	DE,0
+		push	DE
+		ld	A,(IX-2)
+		ld	L,A
+		rla
+		sbc	A,A
+		ld	H,A
+		sla	L
+		rl	H
+		ld	BC,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_memset
+; - if -
+%%LINE	  000698
+;Expr(698): !extractfilename(name,_FILEBUFF[fd])	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		pop	HL
+		pop	HL
+		push	DE
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		push	HL
+		call	_extractfilename
+		pop	DE
+		pop	DE
+		ld	A,C
+		or	A
+		jr.x	nz,L175
+;
+; - then -
+%%BB	  line=699
+%%LINE	  000701
+;Expr(701): puts("INV NAME")	
+		ld	BC,S35
+		push	BC
+		call	_puts
+; - return -
+%%LINE	  000702
+;Expr(702): - 1	
+		ld	BC,65535
+		pop	HL
+		jr.x	L163
+%%EB	  
+; - endif -
+;
+L175:
+%%LINE	  000704
+;Expr(704): _FILEBUFF[fd]->FCB.currentblock=0	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,12
+		add	HL,DE
+		ld	(HL),0
+%%LINE	  000705
+;Expr(705): memdump((unsigned short)_FILEBUFF[fd],36)	
+		ld	BC,36
+		push	BC
+		ld	A,(IX-2)
+		ld	E,A
+		rla
+		sbc	A,A
+		ld	D,A
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		push	BC
+		call	_memdump
+; - switch -
+%%LINE	  000707
+;Expr(707): openmode	
+		pop	BC
+		pop	BC
+		jr.x	L176
+%%BB	  line=708
+; - case - 
+L178:
+%%LINE	  000709
+; - if -
+%%LINE	  000711
+;Expr(711): 00ff==CPMCREATE(_FILEBUFF[fd])	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_CPMCREATE
+		pop	DE
+		ld	A,C
+		cp	255
+		jr.x	nz,L180
+;
+; - then -
+%%BB	  line=712
+%%LINE	  000714
+;Expr(714): puts("CPMCREATE NG")	
+		ld	BC,S36
+		push	BC
+		call	_puts
+; - return -
+%%LINE	  000715
+;Expr(715): - 1	
+		ld	BC,65535
+		pop	HL
+		jr.x	L163
+%%EB	  
+; - endif -
+;
+L180:
+%%LINE	  000717
+;Expr(717): puts("CPMCREATE OK")	
+		ld	BC,S37
+		push	BC
+		call	_puts
+; - break -
+%%LINE	  000718
+		pop	BC
+		jr.x	L177
+; - case - 
+L181:
+%%LINE	  000720
+; - if -
+%%LINE	  000722
+;Expr(722): 00ff==CPMOPEN(_FILEBUFF[fd])	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_CPMOPEN
+		pop	DE
+		ld	A,C
+		cp	255
+		jr.x	nz,L183
+;
+; - then -
+%%BB	  line=723
+%%LINE	  000725
+;Expr(725): puts("CPMOPEN NG")	
+		ld	BC,S38
+		push	BC
+		call	_puts
+; - return -
+%%LINE	  000726
+;Expr(726): - 1	
+		ld	BC,65535
+		pop	HL
+		jr.x	L163
+%%EB	  
+; - endif -
+;
+L183:
+%%LINE	  000728
+;Expr(728): puts("CPMOPEN OK")	
+		ld	BC,S39
+		push	BC
+		call	_puts
+; - break -
+%%LINE	  000729
+		pop	BC
+		jr.x	L177
+; - default -
+L184:
+%%LINE	  000730
+; - return -
+%%LINE	  000732
+;Expr(732): - 1	
+		ld	BC,65535
+		jr.x	L163
+%%EB	  
+		jr.x	L177
+; - switch table -
+L176:
+		ld	A,(IX+8)
+		or	A
+		jr.x	z,L178
+		dec	A
+		jr.x	z,L181
+		jr.x	L184
+L177:
+%%LINE	  000736
+;Expr(736): _iob[fd]._flag=0004	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	DE,6
+		add	HL,DE
+		ld	(HL),4
+		inc	HL
+		ld	(HL),0
+; - switch -
+%%LINE	  000739
+;Expr(739): mode	
+		jr.x	L185
+%%BB	  line=740
+; - case - 
+L187:
+%%LINE	  000741
+%%LINE	  000742
+;Expr(742): _iob[fd]._flag|=0001	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	DE,6
+		add	HL,DE
+		set	0,(HL)
+; - break -
+%%LINE	  000743
+		jr.x	L186
+; - case - 
+L188:
+%%LINE	  000744
+%%LINE	  000745
+;Expr(745): _iob[fd]._flag|=0002	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	DE,6
+		add	HL,DE
+		set	1,(HL)
+; - break -
+%%LINE	  000746
+		jr.x	L186
+; - case - 
+L189:
+%%LINE	  000747
+%%LINE	  000748
+;Expr(748): _iob[fd]._flag|=0001+ 0002	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	DE,6
+		add	HL,DE
+		ld	A,3
+		or	(HL)
+		ld	(HL),A
+		ld	A,0
+		inc	HL
+		or	(HL)
+		ld	(HL),A
+; - break -
+%%LINE	  000749
+		jr.x	L186
+%%EB	  
+; - switch table -
+L185:
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		ld	A,H
+		or	L
+		jr.x	z,L187
+		dec	HL
+		ld	A,H
+		or	L
+		jr.x	z,L188
+		dec	HL
+		ld	A,H
+		or	L
+		jr.x	z,L189
+		jr.x	L186
+L186:
+%%LINE	  000753
+;Expr(753): _FILEBUFF[fd]->DTA_ptr=_FILEBUFF[fd]->DTA+ 0080	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,168
+		add	HL,DE
+		ld	B,H
+		ld	C,L
+		ld	HL,37
+		add	HL,DE
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+%%LINE	  000754
+;Expr(754): _FILEBUFF[fd]->DTA_written=0	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,39
+		add	HL,DE
+		ld	(HL),0
+%%LINE	  000756
+;Expr(756): print("_iob[")	
+		ld	BC,S40
+		push	BC
+		call	_print
+%%LINE	  000757
+;Expr(757): puthex(fd)	
+		pop	BC
+		ld	C,(IX-2)
+		push	BC
+		call	_puthex
+%%LINE	  000758
+;Expr(758): print("] ")	
+		pop	BC
+		ld	BC,S41
+		push	BC
+		call	_print
+%%LINE	  000759
+;Expr(759): puthexshort((unsigned short)&_iob[fd])	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		pop	DE
+		push	HL
+		call	_puthexshort
+%%LINE	  000760
+;Expr(760): (--	((&_iob[1]))->_cnt>=0?*((&_iob[1]))->_ptr++ =('	'):_flushbuf(('	'),(&_iob[1])))	
+		ld	BC,(__iob+9)
+		dec	BC
+		ld	(__iob+9),BC
+		pop	DE
+		ld	HL,0
+		or	A
+		adc	HL,BC
+		jp	m,L190
+;
+		ld	DE,(__iob+11)
+		ld	H,D
+		ld	L,E
+		inc	HL
+		ld	(IX-4),L
+		ld	(IX-3),H
+		ld	BC,__iob
+		ld	HL,11
+		add	HL,BC
+		ld	C,(IX-4)
+		ld	B,(IX-3)
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+		ld	H,D
+		ld	L,E
+		ld	(HL),32
+		ld	(IX-6),32
+		ld	(IX-5),0
+		jr.x	L191
+L190:
+;
+		ld	BC,__iob+9
+		push	BC
+		ld	DE,32
+		push	DE
+		call	__flushbuf
+		ld	(IX-8),C
+		ld	(IX-7),B
+		pop	DE
+		pop	DE
+L191:
+;
+%%LINE	  000761
+;Expr(761): puthexshort(_iob[fd]._cnt)	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_puthexshort
+%%LINE	  000762
+;Expr(762): (--	((&_iob[1]))->_cnt>=0?*((&_iob[1]))->_ptr++ =('	'):_flushbuf(('	'),(&_iob[1])))	
+		ld	BC,(__iob+9)
+		dec	BC
+		ld	(__iob+9),BC
+		pop	DE
+		ld	HL,0
+		or	A
+		adc	HL,BC
+		jp	m,L192
+;
+		ld	DE,(__iob+11)
+		ld	H,D
+		ld	L,E
+		inc	HL
+		ld	(IX-10),L
+		ld	(IX-9),H
+		ld	BC,__iob
+		ld	HL,11
+		add	HL,BC
+		ld	C,(IX-10)
+		ld	B,(IX-9)
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+		ld	H,D
+		ld	L,E
+		ld	(HL),32
+		ld	(IX-12),32
+		ld	(IX-11),0
+		jr.x	L193
+L192:
+;
+		ld	BC,__iob+9
+		push	BC
+		ld	DE,32
+		push	DE
+		call	__flushbuf
+		ld	(IX-14),C
+		ld	(IX-13),B
+		pop	DE
+		pop	DE
+L193:
+;
+%%LINE	  000763
+;Expr(763): puthexshort((unsigned short)_iob[fd]._ptr)	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		inc	HL
+		inc	HL
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_puthexshort
+%%LINE	  000764
+;Expr(764): (--	((&_iob[1]))->_cnt>=0?*((&_iob[1]))->_ptr++ =('	'):_flushbuf(('	'),(&_iob[1])))	
+		ld	BC,(__iob+9)
+		dec	BC
+		ld	(__iob+9),BC
+		pop	DE
+		ld	HL,0
+		or	A
+		adc	HL,BC
+		jp	m,L194
+;
+		ld	DE,(__iob+11)
+		ld	H,D
+		ld	L,E
+		inc	HL
+		ld	(IX-16),L
+		ld	(IX-15),H
+		ld	BC,__iob
+		ld	HL,11
+		add	HL,BC
+		ld	C,(IX-16)
+		ld	B,(IX-15)
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+		ld	H,D
+		ld	L,E
+		ld	(HL),32
+		ld	(IX-18),32
+		ld	(IX-17),0
+		jr.x	L195
+L194:
+;
+		ld	BC,__iob+9
+		push	BC
+		ld	DE,32
+		push	DE
+		call	__flushbuf
+		ld	(IX-20),C
+		ld	(IX-19),B
+		pop	DE
+		pop	DE
+L195:
+;
+%%LINE	  000765
+;Expr(765): puthexshort((unsigned short)_iob[fd]._base)	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		inc	HL
+		inc	HL
+		inc	HL
+		inc	HL
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_puthexshort
+%%LINE	  000766
+;Expr(766): (--	((&_iob[1]))->_cnt>=0?*((&_iob[1]))->_ptr++ =('	'):_flushbuf(('	'),(&_iob[1])))	
+		ld	BC,(__iob+9)
+		dec	BC
+		ld	(__iob+9),BC
+		pop	DE
+		ld	HL,0
+		or	A
+		adc	HL,BC
+		jp	m,L196
+;
+		ld	DE,(__iob+11)
+		ld	H,D
+		ld	L,E
+		inc	HL
+		ld	(IX-22),L
+		ld	(IX-21),H
+		ld	BC,__iob
+		ld	HL,11
+		add	HL,BC
+		ld	C,(IX-22)
+		ld	B,(IX-21)
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+		ld	H,D
+		ld	L,E
+		ld	(HL),32
+		ld	(IX-24),32
+		ld	(IX-23),0
+		jr.x	L197
+L196:
+;
+		ld	BC,__iob+9
+		push	BC
+		ld	DE,32
+		push	DE
+		call	__flushbuf
+		ld	(IX-26),C
+		ld	(IX-25),B
+		pop	DE
+		pop	DE
+L197:
+;
+%%LINE	  000767
+;Expr(767): puthexshort(_iob[fd]._flag)	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	BC,6
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_puthexshort
+%%LINE	  000768
+;Expr(768): (--	((&_iob[1]))->_cnt>=0?*((&_iob[1]))->_ptr++ =('	'):_flushbuf(('	'),(&_iob[1])))	
+		ld	BC,(__iob+9)
+		dec	BC
+		ld	(__iob+9),BC
+		pop	DE
+		ld	HL,0
+		or	A
+		adc	HL,BC
+		jp	m,L198
+;
+		ld	DE,(__iob+11)
+		ld	H,D
+		ld	L,E
+		inc	HL
+		ld	(IX-28),L
+		ld	(IX-27),H
+		ld	BC,__iob
+		ld	HL,11
+		add	HL,BC
+		ld	C,(IX-28)
+		ld	B,(IX-27)
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+		ld	H,D
+		ld	L,E
+		ld	(HL),32
+		ld	(IX-30),32
+		ld	(IX-29),0
+		jr.x	L199
+L198:
+;
+		ld	BC,__iob+9
+		push	BC
+		ld	DE,32
+		push	DE
+		call	__flushbuf
+		ld	(IX-32),C
+		ld	(IX-31),B
+		pop	DE
+		pop	DE
+L199:
+;
+%%LINE	  000769
+;Expr(769): puthex(_iob[fd]._file)	
+		ld	A,(IX-2)
+		ld	C,A
+		rla
+		sbc	A,A
+		ld	B,A
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	DE,8
+		add	HL,DE
+		ld	B,(HL)
+		ld	C,B
+		push	BC
+		call	_puthex
+%%LINE	  000770
+;Expr(770): print("\r\n")	
+		pop	BC
+		ld	BC,S42
+		push	BC
+		call	_print
+%%LINE	  000771
+;Expr(771): memdump((unsigned short)_FILEBUFF[fd],36)	
+		pop	BC
+		ld	BC,36
+		push	BC
+		ld	A,(IX-2)
+		ld	E,A
+		rla
+		sbc	A,A
+		ld	D,A
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		push	BC
+		call	_memdump
+%%LINE	  000772
+;Expr(772): put_iob()	
+		call	_put_iob
+; - return -
+%%LINE	  000774
+;Expr(774): fd	
+		ld	A,(IX-2)
+		ld	E,A
+		rla
+		sbc	A,A
+		ld	D,A
+		ld	B,D
+		ld	C,E
+		pop	HL
+		pop	HL
+		jr.x	L163
+%%LINE	  000775
+; RET
+L163:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	name ->	offset 4	 pointer
+;	pos -> offset -1	 unsigned char
+;	mode ->	offset 6	 int
+;	fd -> offset -2	 char
+;	openmode -> offset 8	 char
+%%LINE	  000797
+%%FUNC	  create,3,cls=2,type=5
+_create:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+%%DFP	  2
+%%SYM	  name,14,type=1,cls=6,val=4,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  mode,14,type=6,cls=6,val=6,size=2
+%%ENDD	  
+%%BF	  
+%%LINE	  000798
+;Expr(798): print("create(")	
+		ld	BC,S43
+		push	BC
+		call	_print
+%%LINE	  000799
+;Expr(799): print(name)	
+		pop	BC
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_print
+%%LINE	  000800
+;Expr(800): print(", 0x")	
+		pop	BC
+		ld	BC,S44
+		push	BC
+		call	_print
+%%LINE	  000801
+;Expr(801): puthexshort(mode)	
+		pop	BC
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		push	BC
+		call	_puthexshort
+%%LINE	  000802
+;Expr(802): print(")\r\n")	
+		pop	BC
+		ld	BC,S45
+		push	BC
+		call	_print
+; - if -
+%%LINE	  000807
+;Expr(807): 0!=((000100|000080)&mode)	
+		ld	A,(IX+6)
+		and	128
+		ld	C,A
+		ld	A,(IX+7)
+		and	1
+		ld	B,A
+		pop	DE
+		ld	A,C
+		or	B
+		jr.x	z,L202
+;
+; - then -
+%%BB	  line=808
+%%LINE	  000809
+;Expr(809): mode=0002	
+		ld	(IX+6),2
+		ld	(IX+7),0
+%%EB	  
+		jr.x	L201
+; - else -
+;
+L202:
+; - if -
+%%LINE	  000811
+;Expr(811): 0!=(000100&mode)	
+		ld	A,(IX+6)
+		and	0
+		ld	C,A
+		ld	A,(IX+7)
+		and	1
+		ld	B,A
+		ld	A,C
+		or	B
+		jr.x	z,L204
+;
+; - then -
+%%BB	  line=812
+%%LINE	  000813
+;Expr(813): mode=0000	
+		ld	(IX+6),0
+		ld	(IX+7),0
+%%EB	  
+		jr.x	L203
+; - else -
+;
+L204:
+; - if -
+%%LINE	  000815
+;Expr(815): 0!=(000080&mode)	
+		ld	A,(IX+6)
+		and	128
+		ld	C,A
+		ld	A,(IX+7)
+		and	0
+		ld	B,A
+		ld	A,C
+		or	B
+		jr.x	z,L206
+;
+; - then -
+%%BB	  line=816
+%%LINE	  000817
+;Expr(817): mode=0001	
+		ld	(IX+6),1
+		ld	(IX+7),0
+%%EB	  
+		jr.x	L205
+; - else -
+;
+L206:
+%%BB	  line=820
+%%LINE	  000821
+;Expr(821): mode=0000	
+		ld	(IX+6),0
+		ld	(IX+7),0
+%%EB	  
+; - endif -
+L205:
+; - endif -
+L203:
+; - endif -
+L201:
+; - return -
+%%LINE	  000824
+;Expr(824): createopen(name,mode,0)	
+		ld	C,0
+		push	BC
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		push	BC
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		push	DE
+		call	_createopen
+		pop	HL
+		pop	HL
+		pop	HL
+		jr.x	L207
+%%LINE	  000825
+; RET
+L207:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	name ->	offset 4	 pointer
+;	mode ->	offset 6	 unsigned int
+%%LINE	  000832
+%%FUNC	  open,3,cls=2,type=5
+_open:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+%%DFP	  2
+%%SYM	  name,14,type=1,cls=6,val=4,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  mode,14,type=5,cls=6,val=6,size=2
+%%ENDD	  
+%%BF	  
+;	name ->	4	(00004h)	 pointer
+;	mode ->	6	(00006h)	 int
+%%SYM	  fd,0,type=1,cls=6,val=-1,size=1
+;	fd -> -1	(0ffffh)	 char
+%%LINE	  000835
+;Expr(835): print("open(")	
+		ld	BC,S46
+		push	BC
+		call	_print
+%%LINE	  000836
+;Expr(836): print(name)	
+		pop	BC
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_print
+%%LINE	  000837
+;Expr(837): print(", 0x")	
+		pop	BC
+		ld	BC,S47
+		push	BC
+		call	_print
+%%LINE	  000838
+;Expr(838): puthexshort(mode)	
+		pop	BC
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		push	BC
+		call	_puthexshort
+%%LINE	  000839
+;Expr(839): print(")\r\n")	
+		pop	BC
+		ld	BC,S48
+		push	BC
+		call	_print
+; - return -
+%%LINE	  000841
+;Expr(841): createopen(name,mode,1)	
+		pop	BC
+		ld	C,1
+		push	BC
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		push	BC
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		push	DE
+		call	_createopen
+		pop	HL
+		pop	HL
+		pop	HL
+		jr.x	L209
+%%LINE	  000842
+; RET
+L209:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	name ->	offset 4	 pointer
+;	mode ->	offset 6	 int
+%%LINE	  000856
+%%FUNC	  lseek,3,cls=2,type=7
+_lseek:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+		push	HL
+		push	HL
+		push	HL
+%%DFP	  3
+%%SYM	  fd,14,type=5,cls=6,val=4,size=2
+%%SYM	  offset,14,type=7,cls=6,val=6,size=4
+%%SYM	  origin,14,type=5,cls=6,val=10,size=2
+%%ENDD	  
+%%BF	  
+;	fd -> 4	(00004h)	 int
+;	offset -> 6	(00006h)	 long
+;	origin -> 10	(0000ah)	 int
+%%SYM	  size,0,type=7,cls=6,val=-4,size=4
+;	size ->	-4	(0fffch)	 long
+%%SYM	  DTA_cnt,0,type=2,cls=6,val=-5,size=1
+;	DTA_cnt	-> -5	(0fffbh)	 unsigned char
+; - if -
+%%LINE	  000861
+;Expr(861): (0==fd)||(1==fd)||(2==fd)	
+		ld	A,(IX+4)
+		or	(IX+5)
+		jr.x	z,L212
+;
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		ld	BC,1
+		or	A
+		sbc	HL,BC
+		jr.x	z,L213
+;
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		inc	BC
+		or	A
+		sbc	HL,BC
+		jr.x	nz,L214
+L213:
+L212:
+;
+; - then -
+%%BB	  line=862
+; - return -
+%%LINE	  000863
+;Expr(863): offset	
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		ld	E,(IX+8)
+		ld	D,(IX+9)
+		jr.x	L215
+%%EB	  
+; - endif -
+;
+L214:
+; - if -
+%%LINE	  000869
+;Expr(869): 0!=_FILEBUFF[fd]->DTA_written	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	A,E
+		add	A,39
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	B,A
+		ld	A,B
+		or	A
+		jr.x	z,L217
+;
+; - then -
+%%BB	  line=870
+%%LINE	  000871
+;Expr(871): rndrecorddec(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecorddec
+%%LINE	  000873
+;Expr(873): CPMSETDTA(_FILEBUFF[fd]->DTA)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		pop	BC
+		push	HL
+		call	_CPMSETDTA
+; - if -
+%%LINE	  000874
+;Expr(874): 0000!=CPMRNDWRITE(_FILEBUFF[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		push	DE
+		call	_CPMRNDWRITE
+		pop	DE
+		ld	A,C
+		or	A
+		jr.x	z,L219
+;
+; - then -
+%%BB	  line=875
+%%LINE	  000876
+;Expr(876): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+; - return -
+%%LINE	  000877
+;Expr(877): - 1	
+		ld	BC,65535
+		ld	DE,65535
+		pop	HL
+		jr.x	L215
+%%EB	  
+; - endif -
+;
+L219:
+%%LINE	  000879
+;Expr(879): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+%%LINE	  000880
+;Expr(880): _FILEBUFF[fd]->DTA_written=0	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,39
+		add	HL,DE
+		ld	(HL),0
+%%EB	  
+; - endif -
+;
+		pop	BC
+L217:
+%%LINE	  000884
+;Expr(884): DTA_cnt=_FILEBUFF[fd]->DTA_ptr- _FILEBUFF[fd]->DTA	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		ld	A,E
+		add	A,37
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	C,A
+		inc	DE
+		ld	A,(DE)
+		ld	B,A
+		ld	A,C
+		sub	L
+		ld	E,A
+		ld	A,B
+		sbc	A,H
+		ld	D,A
+		ld	(IX-5),E
+; - if -
+%%LINE	  000885
+;Expr(885): 0080<=DTA_cnt	
+		ld	A,E
+		cp	128
+		jr.x	c,L221
+;
+; - then -
+%%BB	  line=886
+%%LINE	  000888
+;Expr(888): DTA_cnt=0	
+		ld	(IX-5),0
+%%EB	  
+; - endif -
+;
+L221:
+%%LINE	  000891
+;Expr(891): size=0	
+		ld	(IX-4),0
+		ld	(IX-3),0
+		ld	(IX-2),0
+		ld	(IX-1),0
+; - switch -
+%%LINE	  000893
+;Expr(893): origin	
+		jr.x	L222
+%%BB	  line=894
+; - case - 
+L224:
+%%LINE	  000895
+; - break -
+%%LINE	  000898
+		jr.x	L223
+; - case - 
+L225:
+%%LINE	  000900
+%%LINE	  000904
+;Expr(904): rndrecorddec(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecorddec
+%%LINE	  000905
+;Expr(905): size=_FILEBUFF[fd]->FCB.rndrecordH*0010000*0080	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	A,E
+		add	A,35
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	B,A
+		ld	E,B
+		ld	D,0
+		ld	BC,0
+		ld	A,23
+		or	A
+		jr	z,L0000000296
+L0000000295:
+		sla	E
+		rl	D
+		rl	C
+		rl	B
+		dec	A
+		jr	nz,L0000000295
+L0000000296:
+		ld	(IX-4),E
+		ld	(IX-3),D
+		ld	(IX-2),C
+		ld	(IX-1),B
+%%LINE	  000906
+;Expr(906): size+=_FILEBUFF[fd]->FCB.rndrecordL*0080	
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		ld	A,C
+		add	A,33
+		ld	C,A
+		ld	A,B
+		adc	A,0
+		ld	B,A
+		ld	A,(BC)
+		ld	L,A
+		inc	BC
+		ld	A,(BC)
+		ld	H,A
+		ld	BC,0
+		ld	A,7
+		or	A
+		jr	z,L0000000298
+L0000000297:
+		sla	L
+		rl	H
+		rl	C
+		rl	B
+		dec	A
+		jr	nz,L0000000297
+L0000000298:
+		ld	A,(IX-4)
+		add	A,L
+		ld	(IX-4),A
+		ld	A,(IX-3)
+		adc	A,H
+		ld	(IX-3),A
+		ld	A,(IX-2)
+		adc	A,C
+		ld	(IX-2),A
+		ld	A,(IX-1)
+		adc	A,B
+		ld	(IX-1),A
+%%LINE	  000907
+;Expr(907): rndrecordinc(fd)	
+		pop	HL
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		push	HL
+		call	_rndrecordinc
+%%LINE	  000908
+;Expr(908): size+=DTA_cnt	
+		ld	C,(IX-5)
+		ld	B,0
+		ld	DE,0
+		ld	A,(IX-4)
+		add	A,C
+		ld	(IX-4),A
+		ld	A,(IX-3)
+		adc	A,B
+		ld	(IX-3),A
+		ld	A,(IX-2)
+		adc	A,E
+		ld	(IX-2),A
+		ld	A,(IX-1)
+		adc	A,D
+		ld	(IX-1),A
+; - break -
+%%LINE	  000909
+		pop	BC
+		jr.x	L223
+; - case - 
+L226:
+%%LINE	  000911
+; - if -
+%%LINE	  000916
+;Expr(916): 00ff==CPMFILESIZE(_FILEBUFF[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_CPMFILESIZE
+		pop	DE
+		ld	A,C
+		cp	255
+		jr.x	nz,L228
+;
+; - then -
+%%BB	  line=917
+; - return -
+%%LINE	  000918
+;Expr(918): - 1	
+		ld	BC,65535
+		ld	DE,65535
+		jr.x	L215
+%%EB	  
+; - endif -
+;
+L228:
+%%LINE	  000920
+;Expr(920): size=_FILEBUFF[fd]->FCB.rndrecordH*0010000*0080	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	A,E
+		add	A,35
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	B,A
+		ld	E,B
+		ld	D,0
+		ld	BC,0
+		ld	A,23
+		or	A
+		jr	z,L0000000300
+L0000000299:
+		sla	E
+		rl	D
+		rl	C
+		rl	B
+		dec	A
+		jr	nz,L0000000299
+L0000000300:
+		ld	(IX-4),E
+		ld	(IX-3),D
+		ld	(IX-2),C
+		ld	(IX-1),B
+%%LINE	  000921
+;Expr(921): size+=_FILEBUFF[fd]->FCB.rndrecordL*0080	
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		ld	A,C
+		add	A,33
+		ld	C,A
+		ld	A,B
+		adc	A,0
+		ld	B,A
+		ld	A,(BC)
+		ld	L,A
+		inc	BC
+		ld	A,(BC)
+		ld	H,A
+		ld	BC,0
+		ld	A,7
+		or	A
+		jr	z,L0000000302
+L0000000301:
+		sla	L
+		rl	H
+		rl	C
+		rl	B
+		dec	A
+		jr	nz,L0000000301
+L0000000302:
+		ld	A,(IX-4)
+		add	A,L
+		ld	(IX-4),A
+		ld	A,(IX-3)
+		adc	A,H
+		ld	(IX-3),A
+		ld	A,(IX-2)
+		adc	A,C
+		ld	(IX-2),A
+		ld	A,(IX-1)
+		adc	A,B
+		ld	(IX-1),A
+; - break -
+%%LINE	  000922
+		jr.x	L223
+; - default -
+L229:
+%%LINE	  000924
+; - return -
+%%LINE	  000926
+;Expr(926): - 1	
+		ld	BC,65535
+		ld	DE,65535
+		jr.x	L215
+; - break -
+%%LINE	  000927
+		jr.x	L223
+%%EB	  
+; - switch table -
+L222:
+		ld	L,(IX+10)
+		ld	H,(IX+11)
+		ld	A,H
+		or	L
+		jr.x	z,L224
+		dec	HL
+		ld	A,H
+		or	L
+		jr.x	z,L225
+		dec	HL
+		ld	A,H
+		or	L
+		jr.x	z,L226
+		jr.x	L229
+L223:
+%%LINE	  000930
+;Expr(930): offset+=size	
+		ld	A,(IX+6)
+		add	A,(IX-4)
+		ld	(IX+6),A
+		ld	A,(IX+7)
+		adc	A,(IX-3)
+		ld	(IX+7),A
+		ld	A,(IX+8)
+		adc	A,(IX-2)
+		ld	(IX+8),A
+		ld	A,(IX+9)
+		adc	A,(IX-1)
+		ld	(IX+9),A
+; - if -
+%%LINE	  000931
+;Expr(931): offset<0	
+		ld	L,(IX+8)
+		ld	H,(IX+9)
+		ld	BC,0
+		or	A
+		sbc	HL,BC
+		jp	p,L231
+;
+; - then -
+%%BB	  line=932
+; - return -
+%%LINE	  000934
+;Expr(934): - 1	
+		ld	BC,65535
+		ld	DE,65535
+		jr.x	L215
+%%EB	  
+; - endif -
+;
+L231:
+; - if -
+%%LINE	  000938
+;Expr(938): 00ff==CPMFILESIZE(_FILEBUFF[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		push	DE
+		call	_CPMFILESIZE
+		pop	DE
+		ld	A,C
+		cp	255
+		jr.x	nz,L233
+;
+; - then -
+%%BB	  line=939
+; - return -
+%%LINE	  000940
+;Expr(940): - 1	
+		ld	BC,65535
+		ld	DE,65535
+		jr.x	L215
+%%EB	  
+; - endif -
+;
+L233:
+%%LINE	  000942
+;Expr(942): size=_FILEBUFF[fd]->FCB.rndrecordH*0010000*0080	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	A,E
+		add	A,35
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	B,A
+		ld	E,B
+		ld	D,0
+		ld	BC,0
+		ld	A,23
+		or	A
+		jr	z,L0000000304
+L0000000303:
+		sla	E
+		rl	D
+		rl	C
+		rl	B
+		dec	A
+		jr	nz,L0000000303
+L0000000304:
+		ld	(IX-4),E
+		ld	(IX-3),D
+		ld	(IX-2),C
+		ld	(IX-1),B
+%%LINE	  000943
+;Expr(943): size+=_FILEBUFF[fd]->FCB.rndrecordL*0080	
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		ld	A,C
+		add	A,33
+		ld	C,A
+		ld	A,B
+		adc	A,0
+		ld	B,A
+		ld	A,(BC)
+		ld	L,A
+		inc	BC
+		ld	A,(BC)
+		ld	H,A
+		ld	BC,0
+		ld	A,7
+		or	A
+		jr	z,L0000000306
+L0000000305:
+		sla	L
+		rl	H
+		rl	C
+		rl	B
+		dec	A
+		jr	nz,L0000000305
+L0000000306:
+		ld	A,(IX-4)
+		add	A,L
+		ld	(IX-4),A
+		ld	A,(IX-3)
+		adc	A,H
+		ld	(IX-3),A
+		ld	A,(IX-2)
+		adc	A,C
+		ld	(IX-2),A
+		ld	A,(IX-1)
+		adc	A,B
+		ld	(IX-1),A
+%%LINE	  000946
+;Expr(946): _FILEBUFF[fd]->DTA_ptr=_FILEBUFF[fd]->DTA+ offset%0080	
+		ld	HL,0
+		push	HL
+		ld	BC,128
+		push	BC
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		push	BC
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		push	BC
+		call	csslmod
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		sla	L
+		rl	H
+		ld	DE,__FILEBUFF
+		add	HL,DE
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,40
+		add	HL,BC
+		ld	(IX-8),E
+		ld	(IX-7),D
+		ld	B,H
+		ld	C,L
+		ld	E,(IX-8)
+		ld	D,(IX-7)
+		ld	HL,37
+		add	HL,DE
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+%%LINE	  000947
+;Expr(947): _FILEBUFF[fd]->FCB.rndrecordL=offset/0080	
+		ld	BC,0
+		push	BC
+		ld	DE,128
+		push	DE
+		ld	L,(IX+8)
+		ld	H,(IX+9)
+		push	HL
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		push	BC
+		call	cssldv1
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		sla	L
+		rl	H
+		ld	DE,__FILEBUFF
+		add	HL,DE
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	(IX-8),C
+		ld	(IX-7),B
+		ld	HL,33
+		add	HL,DE
+		ld	C,(IX-8)
+		ld	B,(IX-7)
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+%%LINE	  000948
+;Expr(948): _FILEBUFF[fd]->FCB.rndrecordH=offset/0010000/0080	
+		ld	BC,128
+		push	BC
+		ld	DE,0
+		push	DE
+		ld	L,(IX+8)
+		ld	H,(IX+9)
+		push	HL
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		push	BC
+		call	cssldv1
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		sla	L
+		rl	H
+		ld	DE,__FILEBUFF
+		add	HL,DE
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	(IX-6),C
+		ld	HL,35
+		add	HL,DE
+		ld	A,(IX-6)
+		ld	(HL),A
+; - if -
+%%LINE	  000952
+;Expr(952): size<=offset	
+		ld	HL,24
+		add	HL,SP
+		ld	SP,HL
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		or	A
+		sbc	HL,BC
+		jp	p,L0000000307
+		jp	po,L0000000308
+		jr.x	L235
+L0000000307:
+		jp	pe,L0000000308
+		jr.x	nz,L235
+		ld	E,(IX+6)
+		ld	D,(IX+7)
+		ld	L,(IX-4)
+		ld	H,(IX-3)
+		or	A
+		sbc	HL,DE
+		jr.x	z,L0000000308
+		jr.x	nc,L235
+L0000000308:
+;
+; - then -
+%%BB	  line=953
+%%LINE	  000956
+;Expr(956): memset(_FILEBUFF[fd]->DTA,0,0080)	
+		ld	BC,128
+		push	BC
+		ld	DE,0
+		push	DE
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		sla	L
+		rl	H
+		ld	BC,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		push	HL
+		call	_memset
+%%LINE	  000957
+;Expr(957): CPMSETDTA(_FILEBUFF[fd]->DTA)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		pop	BC
+		pop	BC
+		pop	BC
+		push	HL
+		call	_CPMSETDTA
+; - if -
+%%LINE	  000958
+;Expr(958): 0000!=CPMRNDWRITEZ(_FILEBUFF[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		push	DE
+		call	_CPMRNDWRITEZ
+		pop	DE
+		ld	A,C
+		or	A
+		jr.x	z,L237
+;
+; - then -
+%%BB	  line=959
+%%LINE	  000960
+;Expr(960): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+; - return -
+%%LINE	  000961
+;Expr(961): - 1	
+		ld	BC,65535
+		ld	DE,65535
+		pop	HL
+		jr.x	L215
+%%EB	  
+; - endif -
+;
+L237:
+%%EB	  
+		jr.x	L234
+; - else -
+;
+L235:
+%%BB	  line=965
+%%LINE	  000967
+;Expr(967): CPMSETDTA(_FILEBUFF[fd]->DTA)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		push	HL
+		call	_CPMSETDTA
+; - if -
+%%LINE	  000968
+;Expr(968): 0000!=CPMRNDREAD(_FILEBUFF[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		push	DE
+		call	_CPMRNDREAD
+		pop	DE
+		ld	A,C
+		or	A
+		jr.x	z,L239
+;
+; - then -
+%%BB	  line=969
+%%LINE	  000970
+;Expr(970): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+; - return -
+%%LINE	  000971
+;Expr(971): - 1	
+		ld	BC,65535
+		ld	DE,65535
+		pop	HL
+		jr.x	L215
+%%EB	  
+; - endif -
+;
+L239:
+%%EB	  
+; - endif -
+L234:
+%%LINE	  000974
+;Expr(974): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+%%LINE	  000975
+;Expr(975): _FILEBUFF[fd]->DTA_written=0	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,39
+		add	HL,DE
+		ld	(HL),0
+; - return -
+%%LINE	  000977
+;Expr(977): offset	
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		ld	E,(IX+8)
+		ld	D,(IX+9)
+		pop	HL
+		jr.x	L215
+%%LINE	  000978
+; RET
+L215:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset 4	 int
+;	offset -> offset 6	 long
+;	DTA_cnt	-> offset -5	 unsigned char
+;	size ->	offset -4	 long
+;	origin -> offset 10	 int
+%%LINE	  000984
+%%FUNC	  read,3,cls=2,type=5
+_read:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+		push	HL
+		push	HL
+%%DFP	  3
+%%SYM	  fd,14,type=5,cls=6,val=4,size=2
+%%SYM	  buf,14,type=1,cls=6,val=6,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  size,14,type=5,cls=6,val=8,size=2
+%%ENDD	  
+%%BF	  
+;	fd -> 4	(00004h)	 int
+;	buf -> 6	(00006h)	 pointer
+;	size ->	8	(00008h)	 int
+%%SYM	  count,0,type=6,cls=6,val=-2,size=2
+;	count -> -2	(0fffeh)	 unsigned int
+; - if -
+%%LINE	  001000
+;Expr(1000): (&_iob[0])==&_iob[fd]	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	D,H
+		ld	E,L
+		ld	HL,__iob
+		or	A
+		sbc	HL,DE
+		jr.x	nz,L242
+;
+; - then -
+%%BB	  line=1001
+; - for	-
+%%LINE	  001002
+;Expr(1002): count=0	
+		ld	(IX-2),0
+		ld	(IX-1),0
+L243:
+;Expr(1002): count<size	
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		or	A
+		sbc	HL,BC
+		jr.x	nc,L247
+;
+		jr.x	L244
+L245:
+;Expr(1002): count++	
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		inc	BC
+		ld	(IX-2),C
+		ld	(IX-1),B
+		jr.x	L243
+L244:
+%%BB	  line=1003
+%%LINE	  001004
+;Expr(1004): *buf=CPMGETC()	
+		call	_CPMGETC
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		ld	(HL),C
+; - if -
+%%LINE	  001005
+;Expr(1005): '\r'==*buf	
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		ld	B,(HL)
+		ld	A,B
+		cp	13
+		jr.x	nz,L249
+;
+; - then -
+%%BB	  line=1006
+%%LINE	  001010
+;Expr(1010): *buf='\n'	
+		ld	(HL),10
+%%EB	  
+; - endif -
+;
+L249:
+%%LINE	  001012
+;Expr(1012): buf++	
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		inc	BC
+		ld	(IX+6),C
+		ld	(IX+7),B
+%%EB	  
+%%LINE	  001013
+		jr.x	L245
+; - endfor -
+L246:
+;
+L247:
+; - return -
+%%LINE	  001014
+;Expr(1014): size	
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		jr.x	L250
+%%EB	  
+; - endif -
+;
+L242:
+; - for	-
+%%LINE	  001021
+;Expr(1021): count=0	
+		ld	(IX-2),0
+		ld	(IX-1),0
+L251:
+;Expr(1021): count<size	
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		or	A
+		sbc	HL,BC
+		jr.x	nc,L255
+;
+		jr.x	L252
+L253:
+;Expr(1021): count++	
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		inc	BC
+		ld	(IX-2),C
+		ld	(IX-1),B
+		jr.x	L251
+L252:
+%%BB	  line=1022
+; - if -
+%%LINE	  001024
+;Expr(1024): !DTAvalid(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_DTAvalid
+		pop	DE
+		ld	A,C
+		or	B
+		jr.x	nz,L257
+;
+; - then -
+%%BB	  line=1025
+%%LINE	  001027
+;Expr(1027): CPMSETDTA(_FILEBUFF[fd]->DTA)	
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		ld	HL,40
+		add	HL,BC
+		push	HL
+		call	_CPMSETDTA
+; - if -
+%%LINE	  001028
+;Expr(1028): 0000!=CPMRNDREAD(_FILEBUFF[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		push	DE
+		call	_CPMRNDREAD
+		pop	DE
+		ld	A,C
+		or	A
+		jr.x	z,L259
+;
+; - then -
+%%BB	  line=1029
+; - return -
+%%LINE	  001030
+;Expr(1030): count	
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		jr.x	L250
+%%EB	  
+; - endif -
+;
+L259:
+%%LINE	  001033
+;Expr(1033): _FILEBUFF[fd]->DTA_written=0	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,39
+		add	HL,DE
+		ld	(HL),0
+%%LINE	  001034
+;Expr(1034): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+%%LINE	  001035
+;Expr(1035): _FILEBUFF[fd]->DTA_ptr=_FILEBUFF[fd]->DTA	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		ld	B,H
+		ld	C,L
+		ld	HL,37
+		add	HL,DE
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+%%EB	  
+; - endif -
+;
+		pop	BC
+L257:
+%%LINE	  001038
+;Expr(1038): *buf++ =*_FILEBUFF[fd]->DTA_ptr++	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	H,D
+		ld	L,E
+		ld	A,L
+		add	A,37
+		ld	L,A
+		ld	A,H
+		adc	A,0
+		ld	H,A
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		ld	H,B
+		ld	L,C
+		inc	HL
+		ld	(IX-4),E
+		ld	(IX-3),D
+		ld	D,H
+		ld	E,L
+		ld	(IX-6),C
+		ld	(IX-5),B
+		ld	C,(IX-4)
+		ld	B,(IX-3)
+		ld	HL,37
+		add	HL,BC
+		ld	(HL),E
+		inc	HL
+		ld	(HL),D
+		ld	L,(IX-6)
+		ld	H,(IX-5)
+		ld	B,(HL)
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		ld	(HL),B
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		inc	BC
+		ld	(IX+6),C
+		ld	(IX+7),B
+%%EB	  
+%%LINE	  001039
+		jr.x	L253
+; - endfor -
+L254:
+;
+L255:
+; - return -
+%%LINE	  001040
+;Expr(1040): size	
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		jr.x	L250
+%%LINE	  001041
+; RET
+L250:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset 4	 int
+;	count -> offset	-2	 unsigned int
+;	size ->	offset 8	 int
+;	buf -> offset 6	 pointer
+%%LINE	  001049
+%%FUNC	  write,3,cls=2,type=5
+_write:
+		push	IX
+		ld	IX,0
+		add	IX,SP
+		push	HL
+		push	HL
+		push	HL
+%%DFP	  3
+%%SYM	  fd,14,type=5,cls=6,val=4,size=2
+%%SYM	  buf,14,type=1,cls=6,val=6,size=2
+%%DTY	  
+%%DPT	  
+%%ENDD	  
+%%SYM	  size,14,type=5,cls=6,val=8,size=2
+%%ENDD	  
+%%BF	  
+;	fd -> 4	(00004h)	 int
+;	buf -> 6	(00006h)	 pointer
+;	size ->	8	(00008h)	 int
+%%SYM	  count,0,type=6,cls=6,val=-2,size=2
+;	count -> -2	(0fffeh)	 unsigned int
+; - if -
+%%LINE	  001064
+;Expr(1064): ((&_iob[1])==&_iob[fd])||((&_iob[2])==&_iob[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		ld	D,B
+		ld	E,C
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		ld	H,B
+		ld	L,C
+		add	HL,DE
+		ld	BC,__iob
+		add	HL,BC
+		ld	D,H
+		ld	E,L
+		ld	HL,__iob+9
+		or	A
+		sbc	HL,DE
+		jr.x	z,L262
+;
+		ld	L,(IX+4)
+		ld	H,(IX+5)
+		ld	D,H
+		ld	E,L
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		sla	E
+		rl	D
+		add	HL,DE
+		ld	DE,__iob
+		add	HL,DE
+		ld	B,H
+		ld	C,L
+		ld	HL,__iob+18
+		or	A
+		sbc	HL,BC
+		jr.x	nz,L263
+L262:
+;
+; - then -
+%%BB	  line=1065
+%%LINE	  001066
+;Expr(1066): conout(buf,size)	
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		push	BC
+		ld	E,(IX+6)
+		ld	D,(IX+7)
+		push	DE
+		call	_conout
+; - return -
+%%LINE	  001067
+;Expr(1067): size	
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		pop	HL
+		pop	HL
+		jr.x	L264
+%%EB	  
+; - endif -
+;
+L263:
+%%LINE	  001071
+;Expr(1071): _FILEBUFF[fd]->DTA_written=1	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,39
+		add	HL,DE
+		ld	(HL),1
+; - for	-
+%%LINE	  001072
+;Expr(1072): count=0	
+		ld	(IX-2),0
+		ld	(IX-1),0
+L265:
+;Expr(1072): count<size	
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		ld	L,(IX-2)
+		ld	H,(IX-1)
+		or	A
+		sbc	HL,BC
+		jr.x	nc,L269
+;
+		jr.x	L266
+L267:
+;Expr(1072): count++	
+		ld	C,(IX-2)
+		ld	B,(IX-1)
+		inc	BC
+		ld	(IX-2),C
+		ld	(IX-1),B
+		jr.x	L265
+L266:
+%%BB	  line=1073
+; - if -
+%%LINE	  001074
+;Expr(1074): !DTAvalid(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_DTAvalid
+		pop	DE
+		ld	A,C
+		or	B
+		jr.x	nz,L271
+;
+; - then -
+%%BB	  line=1075
+%%LINE	  001077
+;Expr(1077): memset(_FILEBUFF[fd]->DTA,0,0080)	
+		ld	DE,128
+		push	DE
+		ld	HL,0
+		push	HL
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		ld	HL,40
+		add	HL,BC
+		push	HL
+		call	_memset
+%%LINE	  001078
+;Expr(1078): _FILEBUFF[fd]->DTA_ptr=_FILEBUFF[fd]->DTA	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		ld	B,H
+		ld	C,L
+		ld	HL,37
+		add	HL,DE
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+; - if -
+%%LINE	  001082
+;Expr(1082): (0==_FILEBUFF[fd]->FCB.rndrecordL)&&(0==_FILEBUFF[fd]->FCB.rndrecordH)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	A,E
+		add	A,33
+		ld	E,A
+		ld	A,D
+		adc	A,0
+		ld	D,A
+		ld	A,(DE)
+		ld	L,A
+		inc	DE
+		ld	A,(DE)
+		ld	H,A
+		pop	DE
+		pop	DE
+		pop	DE
+		ld	A,L
+		or	H
+		jr.x	nz,L273
+;
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		ld	A,C
+		add	A,35
+		ld	C,A
+		ld	A,B
+		adc	A,0
+		ld	B,A
+		ld	A,(BC)
+		ld	D,A
+		ld	A,D
+		or	A
+		jr.x	nz,L274
+;
+; - then -
+%%BB	  line=1083
+%%LINE	  001085
+;Expr(1085): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+%%EB	  
+; - endif -
+;
+		pop	BC
+L274:
+L273:
+%%EB	  
+; - endif -
+;
+L271:
+%%LINE	  001089
+;Expr(1089): *_FILEBUFF[fd]->DTA_ptr++ =*buf++	
+		ld	L,(IX+6)
+		ld	H,(IX+7)
+		ld	B,(HL)
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		sla	E
+		rl	D
+		ld	HL,__FILEBUFF
+		add	HL,DE
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	H,D
+		ld	L,E
+		ld	A,L
+		add	A,37
+		ld	L,A
+		ld	A,H
+		adc	A,0
+		ld	H,A
+		ld	(IX-5),B
+		ld	C,(HL)
+		inc	HL
+		ld	B,(HL)
+		ld	(IX-4),C
+		ld	(IX-3),B
+		inc	BC
+		ld	HL,37
+		add	HL,DE
+		ld	(HL),C
+		inc	HL
+		ld	(HL),B
+		ld	L,(IX-4)
+		ld	H,(IX-3)
+		ld	A,(IX-5)
+		ld	(HL),A
+		ld	C,(IX+6)
+		ld	B,(IX+7)
+		inc	BC
+		ld	(IX+6),C
+		ld	(IX+7),B
+; - if -
+%%LINE	  001092
+;Expr(1092): !DTAvalid(fd)	
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		push	DE
+		call	_DTAvalid
+		pop	DE
+		ld	A,C
+		or	B
+		jr.x	nz,L276
+;
+; - then -
+%%BB	  line=1093
+%%LINE	  001094
+;Expr(1094): rndrecorddec(fd)	
+		ld	E,(IX+4)
+		ld	D,(IX+5)
+		push	DE
+		call	_rndrecorddec
+%%LINE	  001096
+;Expr(1096): CPMSETDTA(_FILEBUFF[fd]->DTA)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		ld	HL,40
+		add	HL,DE
+		pop	BC
+		push	HL
+		call	_CPMSETDTA
+; - if -
+%%LINE	  001097
+;Expr(1097): 0000!=CPMRNDWRITE(_FILEBUFF[fd])	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		sla	C
+		rl	B
+		ld	HL,__FILEBUFF
+		add	HL,BC
+		ld	E,(HL)
+		inc	HL
+		ld	D,(HL)
+		pop	HL
+		push	DE
+		call	_CPMRNDWRITE
+		pop	DE
+		ld	A,C
+		or	A
+		jr.x	z,L278
+;
+; - then -
+%%BB	  line=1098
+%%LINE	  001099
+;Expr(1099): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+; - return -
+%%LINE	  001100
+;Expr(1100): - 1	
+		ld	BC,65535
+		pop	HL
+		jr.x	L264
+%%EB	  
+; - endif -
+;
+L278:
+%%LINE	  001102
+;Expr(1102): rndrecordinc(fd)	
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+%%LINE	  001103
+;Expr(1103): rndrecordinc(fd)	
+		pop	BC
+		ld	C,(IX+4)
+		ld	B,(IX+5)
+		push	BC
+		call	_rndrecordinc
+%%EB	  
+; - endif -
+;
+		pop	BC
+L276:
+%%EB	  
+%%LINE	  001105
+		jr.x	L267
+; - endfor -
+L268:
+;
+L269:
+; - return -
+%%LINE	  001106
+;Expr(1106): size	
+		ld	C,(IX+8)
+		ld	B,(IX+9)
+		jr.x	L264
+%%LINE	  001107
+; RET
+L264:
+%%EF	  
+		ld	SP,IX
+		pop	IX
+		ret
+%%FEND	  
+;	fd -> offset 4	 int
+;	size ->	offset 8	 int
+;	buf -> offset 6	 pointer
+;	count -> offset	-2	 unsigned int
+%%EFILE	  
+		extnal	cssldv1
+		extnal	csslmod
+		end

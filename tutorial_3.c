@@ -72,7 +72,7 @@ main(int argc, char *argv[])
     // printf("printf %f", (float)-98765.4321);/* %fは_iobの変な書き込みは行われない */
     puts("");
     put_iob();
-    fp = fopen("test.txt", "r");
+    fp = fopen("write.txt", "r");
     print("fopen fp:");
     puthexshort((unsigned short)fp);
     putchar(' ');
@@ -122,7 +122,7 @@ main(int argc, char *argv[])
         puts("fopen NG");
     put_iob();
 
-    fp2 = fopen("write.txt", "r+"); /* "w"でも読み込みできてしまう */
+    fp2 = fopen("write.txt", "w"); /* "w"でも読み込みできてしまう */
     if (NULL != fp2)
     {
         puts("fopen write OK");
