@@ -72,7 +72,9 @@ main(int argc, char *argv[])
     // printf("printf %f", (float)-98765.4321);/* %fは_iobの変な書き込みは行われない */
     puts("");
     put_iob();
-    fp = fopen("write.txt", "r");
+    fp = fopen("startup.lis", "r");
+    /* オープンでエラーになったとき mainが終了しない 調べる オープンしていないFDをクローズしたところで止まっているようだ */
+    /* ファイル名が"callmain.lis"のように8文字だとファイル名に'.'が含まれてしまう。直す */
     print("fopen fp:");
     puthexshort((unsigned short)fp);
     putchar(' ');
@@ -122,7 +124,7 @@ main(int argc, char *argv[])
         puts("fopen NG");
     put_iob();
 
-    fp2 = fopen("write.txt", "w"); /* "w"でも読み込みできてしまう */
+    fp2 = fopen("write.$$$", "w"); /* "w"でも読み込みできてしまう */
     if (NULL != fp2)
     {
         puts("fopen write OK");

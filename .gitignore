@@ -1,5 +1,11 @@
-tutorial_3.xas
+# gitで追跡しないファイル
 
+# コンパイラが出力したアセンブリファイル
+tutorial_3.xas
+cpmstdio.xas
+callmain.xas
+
+# 中間ファイルやデバッグ用ファイル
 *.xao
 *.lis
 *.gst
@@ -9,5 +15,7 @@ tutorial_3.xas
 *.xho
 *.com
 *.exe
+*.$$$
 
+# 画像の編集前ファイル
 *.afdesign
