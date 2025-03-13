@@ -45,7 +45,7 @@ REM リンク（リンク情報は .xlsファイルに記述する）
 xlnkv tutorial_3.xls -l -m -d -s -o -p
 
 REM 出力オブジェクトをインテルHEX形式に変換
-xoutv tutorial_3.xlo -d -t obj1,sym1 -l 
+xoutv test.xlo -d -t obj1,sym1 -l 
 
 REM インテルHEXを MSX-DOS / CP/M の COMファイルに変換
-python hex2com.py tutorial_3.xho
+python hex2com.py test.xho

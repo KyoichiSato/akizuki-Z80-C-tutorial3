@@ -19,3 +19,5 @@ callmain.xas
 
 # 画像の編集前ファイル
 *.afdesign
+*.pspimage
+*.psp
