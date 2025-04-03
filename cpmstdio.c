@@ -24,6 +24,8 @@ CP/Mのシステムコールの実際の使用例
 応用 CP/M
 */
 
+// #define _DEBUG /* デバッグ用の出力を有効にする */
+
 #include "cpm.h"
 #include <stdio.h>
 #include <string.h>
@@ -351,7 +353,7 @@ char extractfilename(char name[], struct stcpmfcb *FCB)
     /* FCBの filename[11]を 0x20で初期化 */
     memset(FCB->filename, 0x20, 11);
 
-    /* 入力文字列を大文字に */
+    /* 入力文字列を大文字にする */
     for (src = 0; NULL != name[src]; src++)
     {
         if (20 < src)
@@ -387,6 +389,7 @@ char extractfilename(char name[], struct stcpmfcb *FCB)
             return !0; /* 正常終了 */
         if ('.' == name[src])
         {
+            /* '.'は無視 */
             src++;
             break;
         }
@@ -398,6 +401,11 @@ char extractfilename(char name[], struct stcpmfcb *FCB)
     {
         if (NULL == name[src])
             return !0; /* 正常終了 */
+        if ('.' == name[src])
+        {
+            /* '.'は無視 */
+            src++;
+        }
         FCB->filename[dst] = name[src++];
     }
     return !0; /* 正常終了 */
@@ -479,6 +487,7 @@ void conout(char buf[], int size)
 /* スタートアップルーチンから呼び出す初期化処理 */
 void INIT_CPMSTDIO(void)
 {
+#ifdef DEBUG
     unsigned short heapsize, SP;
 
     print("INIT_CPMSTDIO\r\n");
@@ -486,12 +495,15 @@ void INIT_CPMSTDIO(void)
     SP = _GETSPREG();
     puthexshort(SP);
     CPMPUTC(' ');
+#endif
 
     /* CP/M の TPA空きエリアからヒープメモリを確保する */
     HEAPMEMORY.start = _GETENDADDR();
     // HEAPMEMORY.start = (void *)0xA000;
     HEAPMEMORY.end = _GETTPAADDR();
     HEAPMEMORY.point = HEAPMEMORY.start;
+
+#ifdef DEBUG
     heapsize = (unsigned short)HEAPMEMORY.end - (unsigned short)HEAPMEMORY.start;
 
     print("HEAP ");
@@ -501,8 +513,11 @@ void INIT_CPMSTDIO(void)
     print(" SIZE ");
     puthexshort(heapsize);
     print("\r\n");
+#endif
 
     init_iob(); /* _iob[]初期化 */
+
+#ifdef DEBUG
     print("_iob init SP:");
     puthexshort(_GETSPREG());
     print("\r\n");
@@ -517,11 +532,11 @@ void INIT_CPMSTDIO(void)
     puthexshort(SP);
     print("\r\n");
     memdump(0, 0x100);
+#endif
     /*プログラム実行中にだんだんSPレジスタの値が減少していく。
     スタックが開放されず消費されているようだ。
     最適化ONでのみ症状が出る */
     /* 最適化OFFならここまでスタック一定 */
-
 }
 
 /* アプリケーションの異常終了 */
@@ -781,6 +796,7 @@ int createopen(char *name, int mode, char openmode)
 ファイルディスクリプタ番号は _job[]構造体のテーブル番号
 modeはファイルパーミッション （openと異なる）
 0000000*** *** ***
+       ||| ||| |||
        ||| ||| ||+- その他ユーザー 実行可能
        ||| ||| |+-- その他ユーザー 書込可能
        ||| ||| +--- その他ユーザー 読込可能
@@ -791,7 +807,7 @@ modeはファイルパーミッション （openと異なる）
        |+---------- 所有者 書込可能
        +----------- 所有所 読込可能
 なので、CP/Mでは所有者のビットを見て読み書きの判断をするとよい。
-（createが呼ばれるときは、必ず読み書き可能モードになっているようだ。）
+（XCC-Vで createが呼ばれるときは、必ず読み書き可能モード 0664 (110 110 100) になっているようだ。）
 */
 int create(char *name, unsigned int mode)
 {

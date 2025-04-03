@@ -13,24 +13,19 @@ http://creativecommons.org/publicdomain/zero/1.0/
 コンパイル時 "-O o" オプションで最適化すると実行中スタックがおかしな変化をする。
 "-O" オプション無しで最適化を行わないとスタックの変な変動は無く正常。
 */
-#include "cpm.h"
+// #include "cpm.h"
 #include <stdio.h>
-#include <ctype.h>
+// #include <ctype.h>
 
-void puthex(unsigned char a);
-void puthexshort(unsigned short);
-void print(char *str);
-void *sbrk(unsigned int size);
-void put_iob(void);
-void memdump(unsigned short address, unsigned short size);
-
+#if 0
 unsigned short func(unsigned short a, unsigned char b)
 {
     return a + b;
     ;
 }
+#endif
 
-char buff[0x100];
+//char buff[0x100];
 
 main(int argc, char *argv[])
 {
@@ -43,25 +38,8 @@ main(int argc, char *argv[])
     unsigned int record;
     unsigned char pos;
 
-    print("main start SP:");
-    sp = _GETSPREG();
-    puthexshort(sp);
-    print("\r\n");
-    put_iob();
-    // putchar('-');
-    puts("puts");
-    put_iob();
-    // printf("printf\r\n"); /*文字列だけなら異常なさそう*/
-    //  printf("printf %d %x\r\n", 1234, 0xabcd); /*数字をいれると_iob壊れる*/
-    put_iob();
-
-    a = 1;
-    b = 2;
-
-    a = func(a, b);
-    a++;
-    b++;
-    CPMPUTS("Hello! MSX-DOS!! \r\n$");
+    puts("Hello, world!");
+    printf("int:%d float:%f\r\n", 1234, (float)-987.654);
     /* printfを使うと20kbくらいオブジェクトサイズが増える */
     // printf("printf %d %d %02X %04X\r\n", 123, 456, 0x0c, 0x12b);
     // printf("printf %d %d %02X\r\n", 123, 456, 0x0c);
@@ -70,10 +48,15 @@ main(int argc, char *argv[])
     // printf("printf %s", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
     // printf("printf %s\r\n", "ABC");/* %sは_iobの変な書き込みは行われない*/
     // printf("printf %f", (float)-98765.4321);/* %fは_iobの変な書き込みは行われない */
-    puts("");
-    put_iob();
-    fp = fopen("startup.lis", "r");
-    /* オープンでエラーになったとき mainが終了しない 調べる オープンしていないFDをクローズしたところで止まっているようだ */
+    
+    //puts("");
+    //put_iob();
+    fp = fopen("startup0.lis", "r");
+    /* オープンでエラーになったとき mainが終了しない 調べる
+
+    オープンしていないFDをクローズしたところで止まっていた。
+     fclose(NULL)の動作は未定義なので、
+     オープン失敗したファイルポインタをクローズして動作がおかしいのは問題ない。 */
     /* ファイル名が"callmain.lis"のように8文字だとファイル名に'.'が含まれてしまう。直す */
     print("fopen fp:");
     puthexshort((unsigned short)fp);

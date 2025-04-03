@@ -277,7 +277,6 @@ main()
     puts("Hello, world!");
     printf("int:%d float:%f",1234,(float)-98765.4321);
 
-
 }
 ```
 
