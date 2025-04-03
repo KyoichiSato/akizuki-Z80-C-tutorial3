@@ -25,12 +25,12 @@ unsigned short func(unsigned short a, unsigned char b)
 }
 #endif
 
-//char buff[0x100];
+// char buff[0x100];
 
 main(int argc, char *argv[])
 {
     // void *ptr1, *ptr2;
-    FILE *fp, *fp2;
+    FILE *fp1, *fp2;
     // signed char ch;
     unsigned short sp;
     unsigned char a, b;
@@ -48,34 +48,36 @@ main(int argc, char *argv[])
     // printf("printf %s", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
     // printf("printf %s\r\n", "ABC");/* %sは_iobの変な書き込みは行われない*/
     // printf("printf %f", (float)-98765.4321);/* %fは_iobの変な書き込みは行われない */
-    
-    //puts("");
-    //put_iob();
-    fp = fopen("startup0.lis", "r");
+
+    // puts("");
+    // put_iob();
+
+    /* テキストファイルを読むテスト */
+    fp1 = fopen("startup.lis", "r");
     /* オープンでエラーになったとき mainが終了しない 調べる
 
     オープンしていないFDをクローズしたところで止まっていた。
      fclose(NULL)の動作は未定義なので、
      オープン失敗したファイルポインタをクローズして動作がおかしいのは問題ない。 */
-    /* ファイル名が"callmain.lis"のように8文字だとファイル名に'.'が含まれてしまう。直す */
     print("fopen fp:");
-    puthexshort((unsigned short)fp);
+    puthexshort((unsigned short)fp1);
     putchar(' ');
-    if (NULL != fp)
+    if (NULL != fp1)
     {
         puts("fopen OK");
         put_iob();
 
+        /* テキストファイル終端まで表示する */
         while (1)
         {
-            c = fgetc(fp);
+            c = fgetc(fp1);
             if (EOF == c)
             {
                 puts(" EOF");
                 break;
             }
-            /* 0x1A（テキストファイルの終端）をコンソールに出力するとカーソルが移動するかなにかで文字が一部消えるので、
-            0x1Aが来たら終了する。 */
+
+            /* 0x1A（テキストファイルの終端）が来たら終了する。 */
             if (0x1a == c)
             {
                 puts(" 0x1A EOF");
@@ -83,30 +85,48 @@ main(int argc, char *argv[])
             }
             putchar(c);
         }
-        if (0 == rewind(fp))
-            putchar(fgetc(fp));
+
+        /* 読み出し位置変更のテスト */
+        if (0 == rewind(fp1))
+        {
+            puts("rewind");
+            putchar(fgetc(fp1));
+        }
         else
             puts("rewind NG");
-        if (0 == fseek(fp, 5, SEEK_SET))
-            putchar(fgetc(fp));
-        else
-            puts("fseek NG");
-        /* SEEK_CURで1レコードだけのファイルでファイルが0で埋まる 直す */
-        if (0 == fseek(fp, 3, SEEK_CUR))
-            putchar(fgetc(fp));
-        else
-            puts("fseek NG");
-        if (0 == fseek(fp, -126, SEEK_END))
-            putchar(fgetc(fp));
+
+        if (0 == fseek(fp1, 8, SEEK_SET))
+        {
+            puts("fseek SEEK_SET");
+            putchar(fgetc(fp1));
+        }
         else
             puts("fseek NG");
 
-        put_iob();
+        /* SEEK_CURで1レコードだけのファイルでファイルが0で埋まる 直す */
+        if (0 == fseek(fp1, 10, SEEK_CUR))
+        {
+            puts("fseek SEEK_CUR");
+            putchar(fgetc(fp1));
+        }
+        else
+            puts("fseek NG");
+
+        if (0 == fseek(fp1, -126, SEEK_END))
+        {
+            puts("fseek SEEK_END");
+            putchar(fgetc(fp1));
+        }
+        else
+            puts("fseek NG");
+        puts("");
     }
     else
         puts("fopen NG");
+
     put_iob();
 
+    /* ファイルに書き込んでみる */
     fp2 = fopen("write.$$$", "w"); /* "w"でも読み込みできてしまう */
     if (NULL != fp2)
     {
@@ -161,16 +181,28 @@ main(int argc, char *argv[])
         puts("");
     }
     put_iob();
-    if (0 == fclose(fp))
-        puts("fp fclose OK");
-    else
-        puts("fp fclose NG");
-    if (0 == fclose(fp2))
-        puts("fp2 fclose OK");
-    else
-        puts("fp2 fclose NG");
+
+    /*開かれていないファイルポインタをクローズする動作は未定義なので、
+    クローズ前に開かれているファイルポインタであることをチェックする必要がある*/
+    if (NULL != fp1)
+    {
+        if (0 == fclose(fp1))
+            puts("fp fclose OK");
+        else
+            puts("fp fclose NG");
+    }
+
+    if (NULL != fp2)
+    {
+        if (0 == fclose(fp2))
+            puts("fp2 fclose OK");
+        else
+            puts("fp2 fclose NG");
+    }
     put_iob();
 
+    /* コマンドライン引数を表示する
+    argcが１少ない気がするので直す */
     print("argc:");
     puthex(argc);
     puts("");
