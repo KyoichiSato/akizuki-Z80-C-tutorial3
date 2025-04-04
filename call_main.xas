@@ -1,4 +1,4 @@
-%%TOOL	  'xcc-v V10.07	 5a12' ,250404024336
+%%TOOL	  'xcc-v V10.07	 5a12' ,250405024630
 %%COMPILE language=C , source=call_main,cps=2,dps=2
 ;	Cross C	Compiler  XCC-V	 V10.07	(5a12) -08010000:0000-
 ;		== Z80 (V07.02)	5430 ==		
@@ -20,7 +20,7 @@ _ARG_BUFF:
 I_call_main		sect	comm
 S1:
 		db	0
-%%BFILE	  'C:\Users\uts\OneDrive\Documents\program\Z80\XCC-V‚ÌŽg‚¢•û3\call_main.c' ,250207173507,64
+%%BFILE	  'C:\Users\uts\OneDrive\Documents\program\Z80\XCC-V‚ÌŽg‚¢•û3\call_main.c' ,250405024624,65
 C_call_main		sect	code
 %%BFILE	  'C:\akiz80\INCLUDE\string.h' ,050803172034,44
 %%BFILE	  'C:\akiz80\INCLUDE\memory.h' ,050803171952,23
@@ -82,7 +82,7 @@ _CALL_MAIN:
 		ld	(_argc),DE
 ; - if -
 %%LINE	  000032
-;Expr(32): 1<*(unsigned	char *)000080	
+;Expr(32): 1<(*(unsigned char *)000080)	
 		pop	HL
 		pop	HL
 		pop	HL
@@ -112,7 +112,7 @@ _CALL_MAIN:
 		pop	DE
 		pop	DE
 L3:
-;Expr(39): ptr<(ARG_BUFF+ *(unsigned char *)000080)	
+;Expr(39): ptr<(ARG_BUFF+ (*(unsigned char *)000080))	
 		ld	A,(128)
 		ld	C,A
 		ld	B,0
@@ -228,16 +228,20 @@ L7:
 ;
 L2:
 %%LINE	  000061
-;Expr(61): main(argc,argv)	
-		ld	BC,_argv
-		push	BC
-		ld	DE,(_argc)
+;Expr(61): argc++	
+		ld	BC,(_argc)
+		inc	BC
+		ld	(_argc),BC
+%%LINE	  000062
+;Expr(62): main(argc,argv)	
+		ld	DE,_argv
 		push	DE
+		push	BC
 		call	_main
-%%LINE	  000063
-;Expr(63): CPMRESET()	
-		call	_CPMRESET
 %%LINE	  000064
+;Expr(64): CPMRESET()	
+		call	_CPMRESET
+%%LINE	  000065
 %%EF	  
 		ld	SP,IX
 		pop	IX

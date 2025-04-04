@@ -54,6 +54,7 @@ main(int argc, char *argv[])
 
     /* テキストファイルを読むテスト */
     fp1 = fopen("startup.lis", "r");
+    //fp1 = fopen("test.txt", "r");
     /* オープンでエラーになったとき mainが終了しない 調べる
 
     オープンしていないFDをクローズしたところで止まっていた。
@@ -77,7 +78,6 @@ main(int argc, char *argv[])
                 break;
             }
 
-            /* 0x1A（テキストファイルの終端）が来たら終了する。 */
             if (0x1a == c)
             {
                 puts(" 0x1A EOF");
@@ -103,7 +103,6 @@ main(int argc, char *argv[])
         else
             puts("fseek NG");
 
-        /* SEEK_CURで1レコードだけのファイルでファイルが0で埋まる 直す */
         if (0 == fseek(fp1, 10, SEEK_CUR))
         {
             puts("fseek SEEK_CUR");
@@ -119,6 +118,7 @@ main(int argc, char *argv[])
         }
         else
             puts("fseek NG");
+
         puts("");
     }
     else
@@ -206,7 +206,7 @@ main(int argc, char *argv[])
     print("argc:");
     puthex(argc);
     puts("");
-    for (c = 0; c <= argc; c++)
+    for (c = 0; c < argc; c++)
     {
         print("argv[");
         puthex(c);

@@ -10,14 +10,14 @@ http://creativecommons.org/publicdomain/zero/1.0/
 
 #include <string.h>
 
-#define ARG_MAX 20 /* コマンドライン引数の最大値 */
+#define ARG_MAX 20                            /* コマンドライン引数の最大値 */
+#define ARG_LENGTH (*(unsigned char *)0x0080) /* 0x0080にコマンドライン引数の文字数が入っている */
 
 int argc;
 char *argv[ARG_MAX];
-char ARG_BUFF[0x7F]; /* コマンドライン引数のバッファ
+char ARG_BUFF[0x7F]; /* コマンドライン引数を格納するバッファ
  （CP/Mでは最大0x0081 - 0x00FF の126バイト）だけど、終端文字を追加するかもしれないので127バイト確保する */
 
- 
 /* argc、argVをセットしてmain関数を呼び出す。
 戻ってきたらCP/MのファンクションコールでOSに戻る */
 void CALL_MAIN(void)
@@ -25,18 +25,18 @@ void CALL_MAIN(void)
     char *ptr;
 
     memset(ARG_BUFF, 0, sizeof(ARG_BUFF)); /* バッファを終端文字で初期化 */
-    argv[0] = "";                          /* CP/Mでは argv[0]（実行ファイル名）を取得できないので、0番目は空文字列 */
+    argv[0] = "";                          /* CP/Mでは argv[0]（実行ファイル名）を取得できないので、空文字列にしておく */
     argc = 0;
 
     /* コマンドライン引数があるか */
-    if (1 < *(unsigned char *)0x0080) /* 0x0080にコマンドライン引数の文字数が入っている */
+    if (1 < ARG_LENGTH)
     {
         /* コマンドライン引数がある （文字数が1より多い。1の時は' 'のみ）*/
         /* CP/Mのコマンドライン 0x0080 - 0x00FF （DTAのデフォルトアドレス）は
         ユーザーが書き換える可能性があるので、別の場所にコピーする */
         memcpy(ARG_BUFF, (void *)0x0081, 0x7e);
         /* 文字列を走査して' 'で分割する */
-        for (ptr = ARG_BUFF; ptr < (ARG_BUFF + *(unsigned char *)0x0080); ptr++)
+        for (ptr = ARG_BUFF; ptr < (ARG_BUFF + ARG_LENGTH); ptr++)
         {
             if (' ' == *ptr)
             {
@@ -58,6 +58,7 @@ void CALL_MAIN(void)
         }
     }
 
+    argc++;
     main(argc, argv); /* ユーザーメイン関数を呼び出す */
 
     CPMRESET(); /* OSに戻る */

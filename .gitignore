@@ -3,7 +3,7 @@
 # コンパイラが出力したアセンブリファイル
 tutorial_3.xas
 cpmstdio.xas
-callmain.xas
+call_main.xas
 
 # 中間ファイルやデバッグ用ファイル
 *.xao
