@@ -49,6 +49,8 @@ struct	_iobuf {
 };
 */
 
+//#define DEBUG /* デバッグ用の出力を有効にする */
+
 #define DTASIZE 0x80       /* DTA (DMA) のサイズ CP/Mは 128byte */
 #define FPATH_STDIN "CON"  /* 標準入力のデバイス名 */
 #define FPATH_STDOUT "CON" /* 標準出力のデバイス名 */
@@ -189,6 +191,7 @@ void memdump(unsigned short address, unsigned short size)
     p = (unsigned char *)address;
     for (count = 0; size > count; count++)
     {
+        /* 16進表示 */
         if (0 == (count % 16))
         {
             puthexshort((unsigned short)p);
@@ -196,6 +199,8 @@ void memdump(unsigned short address, unsigned short size)
         }
         puthex(*p++);
         CPMPUTC(' ');
+
+        /* ASCII表示 */
         if (0 == ((count + 1) % 16))
         {
             p = p - 16;
@@ -216,6 +221,8 @@ void memdump(unsigned short address, unsigned short size)
             CPMPUTC('\n');
         }
     }
+
+    /* 最後の一行のASCII表示 */
     if (0 != (count % 16))
     {
         for (code = 0; (16 - (count % 16)) > code; code++)
@@ -236,7 +243,8 @@ void memdump(unsigned short address, unsigned short size)
             }
             p++;
         }
-        print("\r\n");
+        CPMPUTC('\r');
+        CPMPUTC('\n');
     }
 }
 
@@ -479,6 +487,7 @@ void conout(char buf[], int size)
         size--;
     }
 }
+
 
 /* --------------------------------------------------------------- */
 /* XCC-Vのライブラリ関数を使用するためにユーザーが作成する必要がある関数 */

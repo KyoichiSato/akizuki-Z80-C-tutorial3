@@ -16,7 +16,7 @@
 /SECT=C_*|CODE
 /SECT=I_*
 /SECT=D_*|COMM          (data   =_DATA)
-/SECT=B_*|COMM		(bss    =_BSS)
+/SECT=B_*|COMM	        (bss    =_BSS)
 /init_section = _INIT_DATA      (_DATA)
 /SECT=_STACK    ; ヒープエリアのアドレスを決定するためにスタックのアドレスを使用するので、
                 ; スタックは末尾に配置する。

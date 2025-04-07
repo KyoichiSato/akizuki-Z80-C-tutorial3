@@ -17,22 +17,9 @@ http://creativecommons.org/publicdomain/zero/1.0/
 #include <stdio.h>
 // #include <ctype.h>
 
-#if 0
-unsigned short func(unsigned short a, unsigned char b)
-{
-    return a + b;
-    ;
-}
-#endif
-
-// char buff[0x100];
-
 main(int argc, char *argv[])
 {
-    // void *ptr1, *ptr2;
     FILE *fp1, *fp2;
-    // signed char ch;
-    unsigned short sp;
     unsigned char a, b;
     int c;
     unsigned int record;
@@ -40,26 +27,18 @@ main(int argc, char *argv[])
 
     puts("Hello, world!");
     printf("int:%d float:%f\r\n", 1234, (float)-987.654);
-    /* printfを使うと20kbくらいオブジェクトサイズが増える */
-    // printf("printf %d %d %02X %04X\r\n", 123, 456, 0x0c, 0x12b);
-    // printf("printf %d %d %02X\r\n", 123, 456, 0x0c);
-    // printf("CPM Version %04X\r\n", CPMVER());
-    /* %dや%xを使うと_iob[9]くらいに表示する文字コードが書き込まれる。異常なのかワークとして使われているのか不明*/
-    // printf("printf %s", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    // printf("printf %s\r\n", "ABC");/* %sは_iobの変な書き込みは行われない*/
-    // printf("printf %f", (float)-98765.4321);/* %fは_iobの変な書き込みは行われない */
+    printf("printf %d %d %02X %04X\r\n", 123, 456, 0x0c, 0x12b);
+    printf("printf %d %d %02X\r\n", 123, 456, 0x0c);
+    printf("printf %s\r\n", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    printf("CPM Version %04X\r\n", CPMVER());
+    /* printfを使うと実行ファイルのサイズが 20kbくらい増える */
 
     // puts("");
     // put_iob();
 
     /* テキストファイルを読むテスト */
-    fp1 = fopen("startup.lis", "r");
-    //fp1 = fopen("test.txt", "r");
-    /* オープンでエラーになったとき mainが終了しない 調べる
-
-    オープンしていないFDをクローズしたところで止まっていた。
-     fclose(NULL)の動作は未定義なので、
-     オープン失敗したファイルポインタをクローズして動作がおかしいのは問題ない。 */
+    //fp1 = fopen("startup.lis", "r");
+    fp1 = fopen("test.txt", "r");
     print("fopen fp:");
     puthexshort((unsigned short)fp1);
     putchar(' ');
@@ -168,10 +147,11 @@ main(int argc, char *argv[])
         fseek(fp2, -16, SEEK_END); /* ファイル終端からシーク */
         fputs("TEST5 TEXT", fp2);
         fseek(fp2, 0, SEEK_END); /* ファイル終端からシーク */
-        fputs("TEST5 TEXT", fp2);
+        fputs("TEST6 TEXT", fp2);
         fseek(fp2, -128 + 16, SEEK_END); /* ファイル終端からシーク */
-        fputs("TEST5 TEXT", fp2);
-        /*シークとライト動作良好。リードモディファイライトのテストする。*/
+        fputs("TEST7 TEXT", fp2);
+        /* 書き込んだファイルを vscodeの WRITE.$$$を16新エディタで開いて確認する */
+
         puts("");
         fseek(fp2, 0x100, SEEK_SET);
         for (pos = 0; pos < 16; pos++)
@@ -201,8 +181,7 @@ main(int argc, char *argv[])
     }
     put_iob();
 
-    /* コマンドライン引数を表示する
-    argcが１少ない気がするので直す */
+    /* コマンドライン引数を表示する */
     print("argc:");
     puthex(argc);
     puts("");
@@ -215,6 +194,6 @@ main(int argc, char *argv[])
     }
 
     CPMPUTS("SP:$");
-    sp = _GETSPREG();
-    puthexshort(sp);
+    puthexshort(_GETSPREG());
+    /* */
 }
