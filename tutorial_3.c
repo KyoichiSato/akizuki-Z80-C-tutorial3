@@ -34,11 +34,7 @@ main(int argc, char *argv[])
     printf("Please enter a string : ");
     gets(BUFF);
     printf("\r\n%s\r\n", BUFF);
-
     /* printfを使うと実行ファイルのサイズが 20kbくらい増える */
-
-    // puts("");
-    // put_iob();
 
     /* テキストファイルを読むテスト */
     //fp1 = fopen("startup.lis", "r");
@@ -49,7 +45,7 @@ main(int argc, char *argv[])
     if (NULL != fp1)
     {
         print("fopen OK\r\n");
-        put_iob();
+        //put_iob();
 
         /* テキストファイル終端まで表示する */
         while (1)
@@ -107,14 +103,14 @@ main(int argc, char *argv[])
     else
         print("fopen NG\r\n");
 
-    put_iob();
+    //put_iob();
 
     /* ファイルに書き込んでみる */
     fp2 = fopen("write.$$$", "w"); /* "w"でも読み込みできてしまう */
     if (NULL != fp2)
     {
         print("fopen write OK\r\n");
-        put_iob();
+        //put_iob();
         for (record = 0; record < 6; record++)
         {
             for (pos = 0; pos < 128; pos++)
@@ -164,7 +160,7 @@ main(int argc, char *argv[])
         }
         print("\r\n");
     }
-    put_iob();
+    //put_iob();
 
     /*開かれていないファイルポインタをクローズする動作は未定義なので、
     クローズ前に開かれているファイルポインタであることをチェックする必要がある*/
@@ -183,7 +179,7 @@ main(int argc, char *argv[])
         else
             print("fp2 fclose NG\r\n");
     }
-    put_iob();
+    //put_iob();
 
     /* コマンドライン引数を表示する */
     print("argc:");
