@@ -49,7 +49,7 @@ void CALL_MAIN(void)
                 }
                 /* 次が' 'ではないとき */
                 argc++;
-                argv[argc] = ptr + 1;
+                argv[argc] = ptr + 1; /* 引数文字列の先頭アドレスをセット */
                 if (ARG_MAX <= argc)
                 {
                     break; /* 最大数を超えたら終了 （ARG_MAX-1まで繰り返す）*/

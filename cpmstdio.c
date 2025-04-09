@@ -49,7 +49,7 @@ struct	_iobuf {
 };
 */
 
-//#define DEBUG /* デバッグ用の出力を有効にする */
+// #define DEBUG /* デバッグ用の出力を有効にする */
 
 #define DTASIZE 0x80       /* DTA (DMA) のサイズ CP/Mは 128byte */
 #define FPATH_STDIN "CON"  /* 標準入力のデバイス名 */
@@ -285,19 +285,19 @@ void init_iob(void)
     stdout->_cnt = 0; /* バッファの空きサイズ */
     stdout->_ptr = (void *)NULL;
     stdout->_base = (void *)NULL;
-    stdout->_flag = _IOWRT + _IONBF; /*ライトモード＋バッファしない*/
+    stdout->_flag = _IOWRT | _IONBF; /*ライトモード＋バッファしない*/
     stdout->_file = FD_STDOUT;
     /* 標準エラー出力 */
     stderr->_cnt = 0;
     stderr->_ptr = (void *)NULL;
     stderr->_base = (void *)NULL;
-    stderr->_flag = _IOWRT + _IONBF; /*ライトモード＋バッファしない*/
+    stderr->_flag = _IOWRT | _IONBF; /*ライトモード＋バッファしない*/
     stderr->_file = FD_STDERR;
     /* 標準入力 */
     stdin->_cnt = 0;
     stdin->_ptr = (void *)NULL;
     stdin->_base = (void *)NULL;
-    stdin->_flag = _IOREAD + _IONBF; /*リードモード＋バッファしない*/
+    stdin->_flag = _IOREAD | _IONBF; /*リードモード＋バッファしない*/
     stdin->_file = FD_STDIN;
 }
 
@@ -434,7 +434,7 @@ char fdempty(void)
     return FD_INVALID;
 }
 
-/* 新規ファイルディスクリプタ番号を返す
+/* 新しくファイルディスクリプタ番号を割り当てて返す
 割り当てできなければ FD_INVALIDを返す */
 char fdallocate(void)
 {
@@ -488,7 +488,6 @@ void conout(char buf[], int size)
     }
 }
 
-
 /* --------------------------------------------------------------- */
 /* XCC-Vのライブラリ関数を使用するためにユーザーが作成する必要がある関数 */
 /* --------------------------------------------------------------- */
@@ -508,7 +507,6 @@ void INIT_CPMSTDIO(void)
 
     /* CP/M の TPA空きエリアからヒープメモリを確保する */
     HEAPMEMORY.start = _GETENDADDR();
-    // HEAPMEMORY.start = (void *)0xA000;
     HEAPMEMORY.end = _GETTPAADDR();
     HEAPMEMORY.point = HEAPMEMORY.start;
 
@@ -542,10 +540,6 @@ void INIT_CPMSTDIO(void)
     print("\r\n");
     memdump(0, 0x100);
 #endif
-    /*プログラム実行中にだんだんSPレジスタの値が減少していく。
-    スタックが開放されず消費されているようだ。
-    最適化ONでのみ症状が出る */
-    /* 最適化OFFならここまでスタック一定 */
 }
 
 /* アプリケーションの異常終了 */
@@ -570,9 +564,11 @@ void *sbrk(unsigned int size)
 {
     void *result;
 
+#ifdef DEBUG
     print("sbrk: size ");
     puthexshort(size);
     CPMPUTC(' ');
+#endif
 
     if (((unsigned int)(HEAPMEMORY.end - HEAPMEMORY.point)) >= size)
     {
@@ -583,11 +579,13 @@ void *sbrk(unsigned int size)
         （short型だと1加算するとアドレスが2増えるなど、型がわからないと計算できない）
         ので char型のポインタにキャストしてから計算している */
 
+#ifdef DEBUG
         print("address ");
         puthexshort((unsigned short)result);
         print(" point ");
         puthexshort((unsigned short)HEAPMEMORY.point);
         print("\r\n");
+#endif
     }
     else
     {
@@ -604,9 +602,11 @@ void *sbrk(unsigned int size)
 ファイルディスクリプタ番号については， create 関数 を参照してください．*/
 int close(int fd)
 {
+#ifdef DEBUG
     print("close fd:");
     puthex(fd);
     print(" ");
+#endif
     /* 標準入出力をクローズしようとしたときは、何もせずに正常終了 */
     if (FD_STDIN == fd)
     {
@@ -624,7 +624,7 @@ int close(int fd)
     if (fd != _iob[fd]._file)
     {
         /* 開かれていないファイルディスクリプタ番号だった */
-        print("close NG invfd\r\n");
+        // print("close NG invfd\r\n");
         return -1;
     }
 
@@ -650,11 +650,11 @@ int close(int fd)
         /* close成功 */
         _iob[fd]._file = FD_EMPTY;
         /*_iob[fd]._flag = _IOERR;*/ /*fclose()で_flagはゼロクリアされる*/
-        print("CPMCLOSE OK\r\n");
+        // print("CPMCLOSE OK\r\n");
         return 0;
     }
     /* close失敗 */
-    print("CPMCLOSE NG\r\n");
+    // print("CPMCLOSE NG\r\n");
     return -1;
 }
 
@@ -707,9 +707,12 @@ int createopen(char *name, int mode, char openmode)
 
     /* ファイルディスクリプタ番号を決定する */
     fd = fdget(); /* fdget()でバッファは確保されている */
+
+#ifdef DEBUG
     print("fd:");
     puthex(fd);
     print("\r\n");
+#endif
 
     if (FD_INVALID == fd)
         return FD_INVALID;
@@ -722,11 +725,14 @@ int createopen(char *name, int mode, char openmode)
     if (!extractfilename(name, _FILEBUFF[fd]))
     {
         /* nameがおかしい */
-        puts("INV NAME");
+        // puts("INV NAME");
         return FD_INVALID;
     }
     _FILEBUFF[fd]->FCB.currentblock = 0;
+
+#ifdef DEBUG
     memdump((unsigned short)_FILEBUFF[fd], 36);
+#endif
 
     switch (openmode)
     {
@@ -735,10 +741,10 @@ int createopen(char *name, int mode, char openmode)
         if (0xff == CPMCREATE(_FILEBUFF[fd]))
         {
             /* エラー */
-            puts("CPMCREATE NG");
+            // puts("CPMCREATE NG");
             return FD_INVALID;
         }
-        puts("CPMCREATE OK");
+        // puts("CPMCREATE OK");
         break;
 
     case OPENMODE_OPEN:
@@ -746,10 +752,10 @@ int createopen(char *name, int mode, char openmode)
         if (0xff == CPMOPEN(_FILEBUFF[fd]))
         {
             /* エラー */
-            puts("CPMOPEN NG");
+            // puts("CPMOPEN NG");
             return FD_INVALID;
         }
-        puts("CPMOPEN OK");
+        // puts("CPMOPEN OK");
         break;
     default:
         /* openmode不正 */
@@ -769,7 +775,7 @@ int createopen(char *name, int mode, char openmode)
         _iob[fd]._flag |= _IOWRT; /*ライトモード*/
         break;
     case O_RDWR:
-        _iob[fd]._flag |= _IOREAD + _IOWRT; /*リードライトモード*/
+        _iob[fd]._flag |= (_IOREAD | _IOWRT); /*リードライトモード*/
         break;
     }
 
@@ -777,6 +783,7 @@ int createopen(char *name, int mode, char openmode)
     _FILEBUFF[fd]->DTA_ptr = _FILEBUFF[fd]->DTA + DTASIZE;
     _FILEBUFF[fd]->DTA_written = 0; /* レコードが書き換えられたフラグクリア */
 
+#ifdef DEBUG
     print("_iob[");
     puthex(fd);
     print("] ");
@@ -794,7 +801,7 @@ int createopen(char *name, int mode, char openmode)
     print("\r\n");
     memdump((unsigned short)_FILEBUFF[fd], 36);
     put_iob();
-
+#endif
     return fd; /* ファイルディスクリプタ番号を返す */
 }
 
@@ -820,11 +827,13 @@ modeはファイルパーミッション （openと異なる）
 */
 int create(char *name, unsigned int mode)
 {
+#ifdef DEBUG
     print("create(");
     print(name);
     print(", 0x");
     puthexshort(mode);
     print(")\r\n");
+#endif
 
     /* modeをopenに与える形式に変換する */
 #define P_READ 0x0100  /*0000 0001 0000 0000*/
@@ -857,11 +866,14 @@ int open(char *name, int mode)
 {
     char fd;
 
+#ifdef DEBUG
     print("open(");
     print(name);
     print(", 0x");
     puthexshort(mode);
     print(")\r\n");
+#endif
+
     /* ファイルを開く */
     return createopen(name, mode, OPENMODE_OPEN);
 }
@@ -875,8 +887,8 @@ origin
 0 (SEEK_SET) ファイルの先頭
 1 (SEEK_CUR) ファイルの現在位置
 2 (SEEK_END) ファイルの最終
- （CP/Mではファイルの終端が不明確なので、SEEK_ENDは使わないでください。
-    fopen()でも "a"を含むモードを使わないでください。オフセットがずれます。）*/
+（CP/Mではファイルの終端が不明確なので、SEEK_ENDは使わないでください。
+fopen()でも "a"を含むモードを使わないでください。オフセットがずれます。）*/
 long lseek(int fd, long offset, int origin)
 {
     signed long size;

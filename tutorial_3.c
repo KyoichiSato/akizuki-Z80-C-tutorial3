@@ -44,7 +44,7 @@ main(int argc, char *argv[])
     putchar(' ');
     if (NULL != fp1)
     {
-        puts("fopen OK");
+        print("fopen OK\r\n");
         put_iob();
 
         /* テキストファイル終端まで表示する */
@@ -53,13 +53,13 @@ main(int argc, char *argv[])
             c = fgetc(fp1);
             if (EOF == c)
             {
-                puts(" EOF");
+                print(" EOF\r\n");
                 break;
             }
 
             if (0x1a == c)
             {
-                puts(" 0x1A EOF");
+                print(" 0x1A EOF\r\n");
                 break;
             }
             putchar(c);
@@ -68,40 +68,40 @@ main(int argc, char *argv[])
         /* 読み出し位置変更のテスト */
         if (0 == rewind(fp1))
         {
-            puts("rewind");
+            print("rewind\r\n");
             putchar(fgetc(fp1));
         }
         else
-            puts("rewind NG");
+            print("rewind NG\r\n");
 
         if (0 == fseek(fp1, 8, SEEK_SET))
         {
-            puts("fseek SEEK_SET");
+            print("fseek SEEK_SET\r\n");
             putchar(fgetc(fp1));
         }
         else
-            puts("fseek NG");
+            print("fseek NG\r\n");
 
         if (0 == fseek(fp1, 10, SEEK_CUR))
         {
-            puts("fseek SEEK_CUR");
+            print("fseek SEEK_CUR\r\n");
             putchar(fgetc(fp1));
         }
         else
-            puts("fseek NG");
+            print("fseek NG\r\n");
 
         if (0 == fseek(fp1, -126, SEEK_END))
         {
-            puts("fseek SEEK_END");
+            print("fseek SEEK_END\r\n");
             putchar(fgetc(fp1));
         }
         else
-            puts("fseek NG");
+            print("fseek NG\r\n");
 
-        puts("");
+        print("\r\n");
     }
     else
-        puts("fopen NG");
+        print("fopen NG\r\n");
 
     put_iob();
 
@@ -109,7 +109,7 @@ main(int argc, char *argv[])
     fp2 = fopen("write.$$$", "w"); /* "w"でも読み込みできてしまう */
     if (NULL != fp2)
     {
-        puts("fopen write OK");
+        print("fopen write OK\r\n");
         put_iob();
         for (record = 0; record < 6; record++)
         {
@@ -121,7 +121,7 @@ main(int argc, char *argv[])
                     /* レコードの先頭ならレコード番号を三桁で出力 */
                     fputc('0' + record / 100, fp2);
                     fputc('0' + record / 10, fp2);
-                    puthex(fputc('0' + record % 10, fp2));
+                    fputc('0' + record % 10, fp2);
                     pos += 2;
                 }
                 else if (126 == pos)
@@ -150,15 +150,15 @@ main(int argc, char *argv[])
         fputs("TEST6 TEXT", fp2);
         fseek(fp2, -128 + 16, SEEK_END); /* ファイル終端からシーク */
         fputs("TEST7 TEXT", fp2);
-        /* 書き込んだファイルを vscodeの WRITE.$$$を16新エディタで開いて確認する */
+        /* 書き込んだファイル WRITE.$$$を vscodeのを16新エディタなどで開いて確認する */
 
-        puts("");
+        print("\r\n");
         fseek(fp2, 0x100, SEEK_SET);
         for (pos = 0; pos < 16; pos++)
         {
             putchar(fgetc(fp2));
         }
-        puts("");
+        print("\r\n");
     }
     put_iob();
 
@@ -167,33 +167,33 @@ main(int argc, char *argv[])
     if (NULL != fp1)
     {
         if (0 == fclose(fp1))
-            puts("fp fclose OK");
+            print("fp1 fclose OK\r\n");
         else
-            puts("fp fclose NG");
+            print("fp1 fclose NG\r\n");
     }
 
     if (NULL != fp2)
     {
         if (0 == fclose(fp2))
-            puts("fp2 fclose OK");
+            print("fp2 fclose OK\r\n");
         else
-            puts("fp2 fclose NG");
+            print("fp2 fclose NG\r\n");
     }
     put_iob();
 
     /* コマンドライン引数を表示する */
     print("argc:");
     puthex(argc);
-    puts("");
+    print("\r\n");
     for (c = 0; c < argc; c++)
     {
         print("argv[");
         puthex(c);
         print("]:");
-        puts(argv[c]);
+        print(argv[c]);
+        print("\r\n");
     }
 
     CPMPUTS("SP:$");
     puthexshort(_GETSPREG());
-    /* */
 }
