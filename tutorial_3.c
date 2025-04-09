@@ -13,9 +13,10 @@ http://creativecommons.org/publicdomain/zero/1.0/
 コンパイル時 "-O o" オプションで最適化すると実行中スタックがおかしな変化をする。
 "-O" オプション無しで最適化を行わないとスタックの変な変動は無く正常。
 */
-// #include "cpm.h"
+
 #include <stdio.h>
-// #include <ctype.h>
+
+char BUFF[128];
 
 main(int argc, char *argv[])
 {
@@ -28,9 +29,12 @@ main(int argc, char *argv[])
     puts("Hello, world!");
     printf("int:%d float:%f\r\n", 1234, (float)-987.654);
     printf("printf %d %d %02X %04X\r\n", 123, 456, 0x0c, 0x12b);
-    printf("printf %d %d %02X\r\n", 123, 456, 0x0c);
     printf("printf %s\r\n", "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
     printf("CPM Version %04X\r\n", CPMVER());
+    printf("Please enter a string : ");
+    gets(BUFF);
+    printf("\r\n%s\r\n", BUFF);
+
     /* printfを使うと実行ファイルのサイズが 20kbくらい増える */
 
     // puts("");
