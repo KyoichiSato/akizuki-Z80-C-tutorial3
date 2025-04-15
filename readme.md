@@ -45,6 +45,7 @@ tutorial_3.xls  リンクパラメータファイル
 hex2com.py      Intel HEX形式を CP/Mの COM形式に変換する Pythonプログラム
 tutorial_3.c    動作確認用の main関数
 ```
+標準入力とファイル入出力の使用例 `tutorial_3.c` 付き。
 
 ## main関数にコマンドライン引数を渡せるようにする
 前回まで使っていたスタートアッププログラムでは、引数なしで main関数を起動していました。
@@ -135,7 +136,7 @@ main(int argc, char *argv[])
     print("argc:");
     puthex(argc);
     puts("");
-    for (c = 0; c <= argc; c++)
+    for (c = 0; c < argc; c++)
     {
         print("argv[");
         puthex(c);
@@ -148,7 +149,7 @@ main(int argc, char *argv[])
 
 ```
 > ./cpm tutorial_3 abcd efgh 1234 5678
-argc:04
+argc:05
 argv[00]:
 argv[01]:ABCD
 argv[02]:EFGH
@@ -275,8 +276,11 @@ CPMのシステムコールを使用して、ファイルを閉じます。
 main()
 {
     puts("Hello, world!");
-    printf("int:%d float:%f",1234,(float)-98765.4321);
-
+    printf("int:%d float:%f\r\n", 1234, (float)-987.654);
+    printf("CPM Version %04X\r\n", CPMVER());
+    printf("Please enter a string : ");
+    gets(BUFF);
+    printf("\r\n%s\r\n", BUFF);
 }
 ```
 
@@ -286,7 +290,7 @@ CP/Mのシステムコールを直接使うか、putsや putcだけを使うよ�
 
 putsや putcならサイズの増大はわずかでした。
 
-printfを使うと _iob[]の不思議な位置へデータの書き込みが行われるのですが、標準ライブラリが意図して _iob[]の領域をバッファとして使用しているのか、プログラムの不具合なのか不明です。
+printfを使う場合は、スタックを多めに 2048byte程度確保する必要があります。
 
 ## ファイル入出力を使ってみる
 せっかく標準ライブラリでファイル入出力を使えるようにしたのですが、まどろっこしいので CP/Mのシステムコールを直接使用したほうが効率が良いです。

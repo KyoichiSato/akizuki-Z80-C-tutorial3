@@ -24,8 +24,6 @@ CP/Mのシステムコールの実際の使用例
 応用 CP/M
 */
 
-// #define _DEBUG /* デバッグ用の出力を有効にする */
-
 #include "cpm.h"
 #include <stdio.h>
 #include <string.h>
@@ -682,7 +680,7 @@ int createopen(char *name, int mode, char openmode)
     /* 標準入出力の時はなにもしない */
     if (0 == strcmp(&name[pos], FPATH_STDOUT))
     {
-        if (O_WRONLY == mode)
+        if (O_WRONLY == mode || O_RDWR == mode)
         {
             /* 標準出力 */
             return FD_STDOUT;

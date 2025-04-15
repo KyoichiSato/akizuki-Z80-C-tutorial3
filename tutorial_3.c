@@ -15,8 +15,33 @@ http://creativecommons.org/publicdomain/zero/1.0/
 */
 
 #include <stdio.h>
+#include <string.h>
 
 char BUFF[128];
+
+/* ファイルに内容を表示する。
+ファイル終端か、size分表示したら終了する */
+void dispfile(FILE *fp, unsigned short size)
+{
+    char c;
+    /* テキストファイル終端まで表示する */
+    while (size--)
+    {
+        c = fgetc(fp);
+        if (EOF == c)
+        {
+            print(" EOF ");
+            break;
+        }
+
+        if (0x1a == c)
+        {
+            print(" 0x1A EOF ");
+            break;
+        }
+        putchar(c);
+    }
+}
 
 main(int argc, char *argv[])
 {
@@ -37,80 +62,67 @@ main(int argc, char *argv[])
     /* printfを使うと実行ファイルのサイズが 20kbくらい増える */
 
     /* テキストファイルを読むテスト */
-    //fp1 = fopen("startup.lis", "r");
+    // fp1 = fopen("startup.lis", "r");
     fp1 = fopen("test.txt", "r");
     print("fopen fp:");
     puthexshort((unsigned short)fp1);
     putchar(' ');
     if (NULL != fp1)
     {
-        print("fopen OK\r\n");
-        //put_iob();
+        print("fopen OK: read\r\n");
+        // put_iob();
 
         /* テキストファイル終端まで表示する */
-        while (1)
-        {
-            c = fgetc(fp1);
-            if (EOF == c)
-            {
-                print(" EOF\r\n");
-                break;
-            }
-
-            if (0x1a == c)
-            {
-                print(" 0x1A EOF\r\n");
-                break;
-            }
-            putchar(c);
-        }
+        dispfile(fp1, 0xffff);
+        print("\r\n");
 
         /* 読み出し位置変更のテスト */
         if (0 == rewind(fp1))
         {
-            print("rewind\r\n");
-            putchar(fgetc(fp1));
+            print("rewind ");
+            dispfile(fp1, 5); /* 5文字表示 */
         }
         else
-            print("rewind NG\r\n");
+            print("rewind NG");
 
         if (0 == fseek(fp1, 8, SEEK_SET))
         {
-            print("fseek SEEK_SET\r\n");
-            putchar(fgetc(fp1));
+            print("\r\nfseek SEEK_SET 8 ");
+            dispfile(fp1, 5);
         }
         else
-            print("fseek NG\r\n");
+            print("fseek NG");
 
-        if (0 == fseek(fp1, 10, SEEK_CUR))
+        if (0 == fseek(fp1, 3, SEEK_CUR))
         {
-            print("fseek SEEK_CUR\r\n");
-            putchar(fgetc(fp1));
+            print("\r\nfseek SEEK_CUR 3 ");
+            dispfile(fp1, 5);
         }
         else
-            print("fseek NG\r\n");
+            print("fseek NG");
 
         if (0 == fseek(fp1, -126, SEEK_END))
         {
-            print("fseek SEEK_END\r\n");
-            putchar(fgetc(fp1));
+            print("\r\nfseek SEEK_END -126 ");
+            dispfile(fp1, 5);
         }
         else
-            print("fseek NG\r\n");
+            print("fseek NG");
 
         print("\r\n");
     }
     else
-        print("fopen NG\r\n");
+        print("fopen NG: read\r\n");
 
-    //put_iob();
+    // put_iob();
 
-    /* ファイルに書き込んでみる */
+    /* 読み込みファイルと同時に別のファイルを開いて書き込んでみる */
+    // fp2 = fopen("CON", "w");
     fp2 = fopen("write.$$$", "w"); /* "w"でも読み込みできてしまう */
     if (NULL != fp2)
     {
-        print("fopen write OK\r\n");
-        //put_iob();
+        print("fopen OK: write\r\n");
+        // put_iob();
         for (record = 0; record < 6; record++)
         {
             for (pos = 0; pos < 128; pos++)
@@ -137,6 +149,8 @@ main(int argc, char *argv[])
                 }
             }
         }
+
+        /* 書き込み位置変更のテスト */
         fputs("TEST1 TEXT", fp2);
         fseek(fp2, 128 * 2, SEEK_CUR); /* 現在位置からシーク */
         fputs("TEST2 TEXT", fp2);
@@ -154,13 +168,14 @@ main(int argc, char *argv[])
 
         print("\r\n");
         fseek(fp2, 0x100, SEEK_SET);
-        for (pos = 0; pos < 16; pos++)
-        {
-            putchar(fgetc(fp2));
-        }
+        dispfile(fp2, 16);
         print("\r\n");
     }
-    //put_iob();
+    else
+    {
+        print("fopen NG: write\r\n");
+    }
+    // put_iob();
 
     /*開かれていないファイルポインタをクローズする動作は未定義なので、
     クローズ前に開かれているファイルポインタであることをチェックする必要がある*/
@@ -179,7 +194,7 @@ main(int argc, char *argv[])
         else
             print("fp2 fclose NG\r\n");
     }
-    //put_iob();
+    // put_iob();
 
     /* コマンドライン引数を表示する */
     print("argc:");
