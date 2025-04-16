@@ -15,11 +15,10 @@ http://creativecommons.org/publicdomain/zero/1.0/
 */
 
 #include <stdio.h>
-#include <string.h>
 
 char BUFF[128];
 
-/* ファイルに内容を表示する。
+/* ファイルの内容を表示する。
 ファイル終端か、size分表示したら終了する */
 void dispfile(FILE *fp, unsigned short size)
 {
