@@ -5,13 +5,6 @@ This code is provided under a CC0 Public Domain License.
 http://creativecommons.org/publicdomain/zero/1.0/
 
 2024年12月11日 佐藤恭一 kyoutan.jpn.org
-
-プログラム実行中に徐々にスタックを消費してゆく
-アセンブラからアセンブラのサブルーチンを繰り返し呼び出してもスタックは消費せず正常。
-標準入出力オープンした後の_iob内容が変じゃないかな？ゴミが入っている
-    ->printfでおかしなアドレスへの書き込みが行われている
-コンパイル時 "-O o" オプションで最適化すると実行中スタックがおかしな変化をする。
-"-O" オプション無しで最適化を行わないとスタックの変な変動は無く正常。
 */
 
 #include <stdio.h>
